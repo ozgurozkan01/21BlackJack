@@ -1,0 +1,1 @@
+CMakeLists.txt not found in C:\Users\ozgur\CLionProjects\21BlackJack Select CMakeLists.txt
