@@ -1,5 +1,5 @@
 //
-// Created by ozgur on 6/4/2023.
+// Created by ozgur on 6/5/2023.
 //
 
 #ifndef INC_21BLACKJACK_GAMEMANAGER_H
@@ -8,6 +8,9 @@
 
 class GameManager {
 
+public:
+
+    GameManager();
 };
 
 
