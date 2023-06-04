@@ -3,3 +3,8 @@
 //
 
 #include "Card.h"
+
+Card::Card(std::string cardValue)
+{
+    value = cardValue;
+}

@@ -61,6 +61,12 @@ build CMakeFiles/21BlackJack.dir/Card.cpp.obj: CXX_COMPILER__21BlackJack_Debug C
   OBJECT_DIR = CMakeFiles\21BlackJack.dir
   OBJECT_FILE_DIR = CMakeFiles\21BlackJack.dir
 
+build CMakeFiles/21BlackJack.dir/GameManager.cpp.obj: CXX_COMPILER__21BlackJack_Debug C$:/Users/ozgur/OneDrive/Documents/GitHub/21BlackJack/GameManager.cpp || cmake_object_order_depends_target_21BlackJack
+  DEP_FILE = CMakeFiles\21BlackJack.dir\GameManager.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\21BlackJack.dir
+  OBJECT_FILE_DIR = CMakeFiles\21BlackJack.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target 21BlackJack
@@ -69,7 +75,7 @@ build CMakeFiles/21BlackJack.dir/Card.cpp.obj: CXX_COMPILER__21BlackJack_Debug C
 #############################################
 # Link the executable 21BlackJack.exe
 
-build 21BlackJack.exe: CXX_EXECUTABLE_LINKER__21BlackJack_Debug CMakeFiles/21BlackJack.dir/main.cpp.obj CMakeFiles/21BlackJack.dir/Card.cpp.obj
+build 21BlackJack.exe: CXX_EXECUTABLE_LINKER__21BlackJack_Debug CMakeFiles/21BlackJack.dir/main.cpp.obj CMakeFiles/21BlackJack.dir/Card.cpp.obj CMakeFiles/21BlackJack.dir/GameManager.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\21BlackJack.dir
