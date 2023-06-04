@@ -5,14 +5,9 @@
 #ifndef INC_21BLACKJACK_GAMEMANAGER_H
 #define INC_21BLACKJACK_GAMEMANAGER_H
 
-class Card;
 
 class GameManager {
 
-public:
-    Card* card[104];
-
-    GameManager();
 };
 
 
