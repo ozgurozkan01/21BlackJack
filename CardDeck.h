@@ -5,9 +5,18 @@
 #ifndef INC_21BLACKJACK_CARDDECK_H
 #define INC_21BLACKJACK_CARDDECK_H
 
+class Card;
 
 class CardDeck {
 
+    int oneTypeCardNumber;
+    int totalCardNumberInDeck;
+    int index;
+    Card* cardDeck[];
+
+public:
+
+    CardDeck();
 };
 
 

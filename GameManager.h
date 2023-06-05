@@ -6,14 +6,12 @@
 #define INC_21BLACKJACK_GAMEMANAGER_H
 #include <string>
 
-class Card;
+class CardDeck;
 
 class GameManager {
 
-    int oneTypeCardNumber;
-    int totalCardNumber;
-    Card* cards[];
-
+    CardDeck* cardDeck;
+    int playerAmount;
 public:
 
     GameManager();
