@@ -4,9 +4,15 @@
 
 #ifndef INC_21BLACKJACK_GAMEMANAGER_H
 #define INC_21BLACKJACK_GAMEMANAGER_H
+#include <string>
 
+class Card;
 
 class GameManager {
+
+    int oneTypeCardNumber;
+    int totalCardNumber;
+    Card* cards[];
 
 public:
 
