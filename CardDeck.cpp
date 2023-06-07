@@ -9,7 +9,7 @@ std::string validCardValues[] = {"A", "2", "3", "4", "5", "6",
                                  "7", "8", "9", "10", "J", "Q", "K"};
 
 CardDeck::CardDeck()
-{
+{ 
     totalCardNumberInDeck = 52;
     index = 0;
     oneTypeCardNumber = totalCardNumberInDeck / (sizeof(validCardValues) / sizeof(validCardValues[0]));

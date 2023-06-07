@@ -11,7 +11,7 @@ class CardDeck {
 
     int oneTypeCardNumber;
     int totalCardNumberInDeck;
-    int index; 
+    int index;
     Card* cardDeck[];
 
 public:
