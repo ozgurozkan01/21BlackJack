@@ -16,7 +16,7 @@ class CardDeck {
 
 public:
     CardDeck();
-/*    Card ** GetDeck();*/
+    Card ** GetDeck();
 };
 
 

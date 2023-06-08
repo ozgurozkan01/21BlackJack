@@ -22,9 +22,7 @@ CardDeck::CardDeck()
         }
     }
 }
-/*
 
 Card ** CardDeck::GetDeck() {
     return deck;
 }
-*/
