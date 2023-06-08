@@ -7,10 +7,12 @@
 #include <string>
 
 class Card {
-public:
     std::string value;
 
+public:
+
     Card(std::string cardValue);
+/*    std::string GetCardValue();*/
 };
 
 

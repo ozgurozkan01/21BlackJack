@@ -4,12 +4,11 @@
 
 #include "CardDeck.h"
 #include "Card.h"
-#include <iostream>
 std::string validCardValues[] = {"A", "2", "3", "4", "5", "6",
                                  "7", "8", "9", "10", "J", "Q", "K"};
 
 CardDeck::CardDeck()
-{ 
+{
     totalCardNumberInDeck = 52;
     index = 0;
     oneTypeCardNumber = totalCardNumberInDeck / (sizeof(validCardValues) / sizeof(validCardValues[0]));
@@ -18,8 +17,14 @@ CardDeck::CardDeck()
     {
         for (int j = 0; j < oneTypeCardNumber; ++j)
         {
-            cardDeck[index] = new Card(validCardValues[i]);
+            deck[index] = new Card(validCardValues[i]);
             index++;
         }
     }
 }
+/*
+
+Card ** CardDeck::GetDeck() {
+    return deck;
+}
+*/

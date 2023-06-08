@@ -12,11 +12,11 @@ class CardDeck {
     int oneTypeCardNumber;
     int totalCardNumberInDeck;
     int index;
-    Card* cardDeck[];
+    Card* deck[];
 
 public:
-
     CardDeck();
+/*    Card ** GetDeck();*/
 };
 
 

@@ -4,5 +4,12 @@ int main() {
 
     GameManager* gameManager = new GameManager();
 
-    return 0;
+/*    gameManager->BeginPlay();
+
+    while(true)
+    {
+        gameManager->Tick();
+    }
+
+    return 0;*/
 }

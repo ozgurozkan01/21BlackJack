@@ -8,3 +8,9 @@ Card::Card(std::string cardValue)
 {
     value = cardValue;
 }
+
+/*
+std::string Card::GetCardValue() {
+    return value;
+}
+*/
