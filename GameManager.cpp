@@ -6,13 +6,13 @@
 #include "Card.h"
 #include "CardDeck.h"
 #include <iostream>
+#include <vector>
 
 GameManager::GameManager()
 {
     srand(time(NULL));
     cardDeck = new CardDeck();
     playerNumber = 0.f;
-
     std::cout << " WELCOME TO 21 BLACKJAKE GAME " << std::endl;
     std::cout << " BEST OF LUCK !! " << std::endl;
 }
@@ -49,7 +49,9 @@ void GameManager::DealFirstPartCard()
     {
         for (int j = 0; j < 2; ++j)
         {
-            std::string card = cardDeck->GetDeck()[rand() % 52]->GetCardValue();
+            int cardIndex = rand() % 52;
+            std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
+            cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
             playersCards[i][j] = card;
         }
     }

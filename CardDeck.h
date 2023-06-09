@@ -5,6 +5,8 @@
 #ifndef INC_21BLACKJACK_CARDDECK_H
 #define INC_21BLACKJACK_CARDDECK_H
 
+#include <vector>
+
 class Card;
 
 class CardDeck {
@@ -12,11 +14,11 @@ class CardDeck {
     int oneTypeCardNumber;
     int totalCardNumberInDeck;
     int index;
-    Card* deck[];
+    std::vector<Card*> deck;
 
 public:
     CardDeck();
-    Card ** GetDeck();
+    std::vector<Card*> GetDeck();
 };
 
 
