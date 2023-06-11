@@ -18,7 +18,9 @@ class CardDeck {
 
 public:
     CardDeck();
-    std::vector<Card*> GetDeck();
+    std::vector<Card*>& GetDeck();
+    int GetRestOfCardNumber();
+    void DecreaseCardNumber();
 };
 
 

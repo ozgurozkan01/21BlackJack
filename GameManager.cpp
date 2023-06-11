@@ -3,8 +3,8 @@
 //
 
 #include "GameManager.h"
-#include "Card.h"
 #include "CardDeck.h"
+#include "Card.h"
 #include <iostream>
 #include <vector>
 
@@ -49,10 +49,12 @@ void GameManager::DealFirstPartCard()
     {
         for (int j = 0; j < 2; ++j)
         {
-            int cardIndex = rand() % 52;
+            int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
             std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
             cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
             playersCards[i][j] = card;
+            cardDeck->DecreaseCardNumber();
+            std::cout << cardDeck->GetDeck().size() << std::endl;
         }
     }
 }

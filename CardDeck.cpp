@@ -13,18 +13,28 @@ CardDeck::CardDeck()
     totalCardNumberInDeck = 52;
     index = 0;
     oneTypeCardNumber = totalCardNumberInDeck / (sizeof(validCardValues) / sizeof(validCardValues[0]));
-    for (int i = 0; i < sizeof(validCardValues) / sizeof(validCardValues[i]); i++)
+    
+    for (int i = 0; i < sizeof(validCardValues) / sizeof(validCardValues[0]); i++)
     {
         for (int j = 0; j < oneTypeCardNumber; ++j)
         {
             deck.push_back(new Card(validCardValues[i]));
             std::string cardValue = (*(deck.begin() + index))->GetCardValue();
-            std::cout << cardValue << std::endl;
             index++;
         }
     }
 }
 
-std::vector<Card*> CardDeck::GetDeck() {
+std::vector<Card*>& CardDeck::GetDeck()
+{
     return deck;
+}
+
+void CardDeck::DecreaseCardNumber()
+{
+    totalCardNumberInDeck--;
+}
+
+int CardDeck::GetRestOfCardNumber() {
+    return totalCardNumberInDeck;
 }
