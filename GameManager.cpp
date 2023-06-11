@@ -93,6 +93,7 @@ void GameManager::CalculatePlayerInitialHand()
     }
 }
 
+
 int GameManager::ConvertCardToPoint(std::string& card)
 {
     if (card == "A") return 11;

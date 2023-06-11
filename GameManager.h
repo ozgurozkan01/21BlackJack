@@ -28,7 +28,6 @@ public:
     //Initial Part
     void DealInitialCard();
     void CalculatePlayerInitialHand();
-
     int ConvertCardToPoint(std::string& card);
     void DesignateCardACE();
 };
