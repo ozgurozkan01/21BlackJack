@@ -16,14 +16,21 @@ class GameManager {
     int playerNumber;
     std::string playersName[maxPlayerNumber];
     std::string playersCards[maxPlayerNumber][2];
+    int playersPoints[maxPlayerNumber];
 public:
 
     GameManager();
     void BeginPlay();
     void Tick();
+
     void SetPlayerNumber();
     void SetPlayerName();
-    void DealFirstPartCard();
+    //Initial Part
+    void DealInitialCard();
+    void CalculatePlayerInitialHand();
+
+    int ConvertCardToPoint(std::string& card);
+    void DesignateCardACE();
 };
 
 
