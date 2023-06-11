@@ -26,10 +26,11 @@ public:
     void SetPlayerNumber();
     void SetPlayerName();
 
-    //Initial Part
+    // Initial Part
     void DealInitialCard();
     void CalculatePlayerInitialHand();
 
+    // Hit Part
     void DealHitCard();
 
     int ConvertCardToPoint(std::string& card);
