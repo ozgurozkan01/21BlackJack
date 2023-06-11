@@ -25,8 +25,12 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
+    // Initial Part
     DealInitialCard();
     CalculatePlayerInitialHand();
+
+    // Hit Part
+    DealHitCard();
 
 }
 
@@ -55,9 +59,32 @@ void GameManager::DealInitialCard()
             std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
             cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
             playersCards[j][i] = card;
-            cardDeck->DecreaseCardNumber();
-            std::cout << cardDeck->GetDeck().size() << std::endl;
+
         }
+    }
+}
+
+void GameManager::DealHitCard()
+{
+
+    for (int i = 0; i < playerNumber; ++i)
+    {
+        bool isCardDealing;
+
+        do {
+            std::cout << "Your point is : " << playersPoints[i] << std::endl;
+            std::cout << playersName[i] << ", do you wanna hit card : " << std::flush;
+            std::cin >> isCardDealing;
+
+            if (isCardDealing)
+            {
+                int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
+                std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
+                playersPoints[i] += ConvertCardToPoint(card);
+                cardDeck->DecreaseCardNumber();
+            }
+
+        }while (isCardDealing);
     }
 }
 

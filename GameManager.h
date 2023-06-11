@@ -30,8 +30,9 @@ public:
     void DealInitialCard();
     void CalculatePlayerInitialHand();
 
+    void DealHitCard();
+
     int ConvertCardToPoint(std::string& card);
-    void DesignateCardACE();
 };
 
 
