@@ -11,8 +11,11 @@
 GameManager::GameManager()
 {
     srand(time(nullptr));
+
     cardDeck = new CardDeck();
+
     playerNumber = 0.f;
+
     std::cout << " WELCOME TO 21 BLACKJAKE GAME " << std::endl;
     std::cout << " BEST OF LUCK !! " << std::endl;
 }
@@ -38,14 +41,24 @@ void GameManager::SetPlayerNumber()
 {
     std::cout << " Enter how many players are gonna play : " << std::flush;
     std::cin >> playerNumber;
+
+    playerNumber++; // For adding croupier
 }
 
 void GameManager::SetPlayerName()
 {
     for (int i = 0; i < playerNumber; ++i)
     {
+        std::string playerName;
+
+        if (i == playerNumber-1)
+        {
+            std::cout << "You are croupier! Never forget." << std::endl;
+        }
+
         std::cout << "Enter " << i+1 << ". player's name : " << std::flush;
-        std::cin >> playersName[i];
+        std::cin >> playerName;
+        playersName.push_back(playerName);
     }
 }
 
@@ -58,8 +71,7 @@ void GameManager::DealInitialCard()
             int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
             std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
             cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
-            playersCards[j][i] = card;
-
+            playersInitialCards[j][i] = card;
         }
     }
 }
@@ -71,8 +83,8 @@ void GameManager::DealHitCard()
     {
         bool isCardDealing;
 
+        std::cout << "Your point is : " << playersPoint[i] << std::endl;
         do {
-            std::cout << "Your point is : " << playersPoints[i] << std::endl;
             std::cout << playersName[i] << ", do you wanna hit card : " << std::flush;
             std::cin >> isCardDealing;
 
@@ -80,11 +92,26 @@ void GameManager::DealHitCard()
             {
                 int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
                 std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-                playersPoints[i] += ConvertCardToPoint(card);
+                playersPoint[i] += ConvertCardToPoint(card);
+                std::cout << "Your new point is : " << playersPoint[i] << std::endl;
                 cardDeck->DecreaseCardNumber();
+
+                if(playersPoint[i] == 21)
+                {
+                    std::cout << "Congratulations! BLACKJACK !!" << std::endl;
+                    continue;
+                }
+
+                else if (playersPoint[i] > 21)
+                {
+                    std::cout << "You Have Lost !! Better Luck Next Time." << std::endl;
+                    playersName.erase(playersName.begin() + i);
+                    exactLosers.push_back(playersName[i]);
+                    continue;
+                }
             }
 
-        }while (isCardDealing);
+        }while (isCardDealing && playersPoint[i] < 21);
     }
 }
 
@@ -92,31 +119,31 @@ void GameManager::CalculatePlayerInitialHand()
 {
     for (int i = 0; i < playerNumber; ++i)
     {
-        if (playersCards[i][0] == "A" && playersCards[i][1] == "A")
+        if (playersInitialCards[i][0] == "A" && playersInitialCards[i][1] == "A")
         {
-            std::cout << "You have 2 AS. You can choose 2, 12, 22" << std::endl;
+            std::cout << playersName[i] << " have 2 AS. You can choose 2, 12, 22" << std::endl;
             std::cout << "Enter your point choice : " << std::flush;
-            std::cin >> playersPoints[i];
+            std::cin >> playersPoint[i];
             continue;
         }
 
-        else if (playersCards[i][0] != "A" && playersCards[i][1] == "A")
+        else if (playersInitialCards[i][0] != "A" && playersInitialCards[i][1] == "A")
         {
-            std::cout << "You have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersCards[i][0]) << " or " << 1 + ConvertCardToPoint(playersCards[i][0]) << std::endl;
+            std::cout << playersName[i] << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersInitialCards[i][0]) << " or " << 1 + ConvertCardToPoint(playersInitialCards[i][0]) << std::endl;
             std::cout << "Enter your point choice : " << std::flush;
-            std::cin >> playersPoints[i];
+            std::cin >> playersPoint[i];
             continue;
         }
 
-        else if (playersCards[i][0] == "A" && playersCards[i][1] != "A")
+        else if (playersInitialCards[i][0] == "A" && playersInitialCards[i][1] != "A")
         {
-            std::cout << "You have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersCards[i][1]) << " or " << 1 + ConvertCardToPoint(playersCards[i][1]) << std::endl;
+            std::cout << playersName[i] << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersInitialCards[i][1]) << " or " << 1 + ConvertCardToPoint(playersInitialCards[i][1]) << std::endl;
             std::cout << "Enter your point choice : " << std::flush;
-            std::cin >> playersPoints[i];
+            std::cin >> playersPoint[i];
             continue;
         }
 
-        playersPoints[i] = ConvertCardToPoint(playersCards[i][1]) + ConvertCardToPoint(playersCards[i][0]);
+        playersPoint[i] = ConvertCardToPoint(playersInitialCards[i][1]) + ConvertCardToPoint(playersInitialCards[i][0]);
     }
 }
 
@@ -132,4 +159,10 @@ int GameManager::ConvertCardToPoint(std::string& card)
     else if (card == "8") return 8;
     else if (card == "9") return 9;
     return 10; // J, K, Q, 10
+}
+
+void GameManager::DesignatePlayersWinOrLose()
+{
+
+
 }
