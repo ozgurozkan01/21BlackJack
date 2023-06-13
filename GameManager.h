@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#define maxPlayerNumber  8 // including croupier
+#define maxPlayerNumber  7 // including croupier
 #define initialHandCardNumber  2
 
 class CardDeck;
@@ -17,13 +17,19 @@ class GameManager {
 
 
     CardDeck* cardDeck;
+
+    // Player
     int playerNumber;
     std::vector<std::string> playersName;
     std::string playersInitialCards[maxPlayerNumber][initialHandCardNumber];
     int playersPoint[maxPlayerNumber];
 
-    std::vector<std::string> exactLosers;
+    // Croupier
+    std::string croupierName;
+    std::string croupierInitalCards[initialHandCardNumber];
+    int croupierPoint;
 
+    std::vector<std::string> exactLosers;
 
 public:
 
@@ -36,7 +42,7 @@ public:
 
     // Initial Part
     void DealInitialCard();
-    void CalculatePlayerInitialHand();
+    void CalculatePlayerInitialHand(int & index);
 
     // Hit Part
     void DealHitCard();
