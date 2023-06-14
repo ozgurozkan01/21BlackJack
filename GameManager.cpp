@@ -33,7 +33,6 @@ void GameManager::Tick()
 
     // Hit Part
     DealHitCard();
-
 }
 
 void GameManager::SetPlayerNumber()
@@ -46,23 +45,16 @@ void GameManager::SetPlayerNumber()
 
 void GameManager::SetPlayerName()
 {
-    for (int i = 0; i < playerNumber; ++i)
+    for (int i = 0; i < playerNumber -1; ++i)
     {
         std::string playerName;
         std::string player = "player's";
-
-        if (i == playerNumber-1)
-        {
-            std::cout << std::endl;
-            std::cout << "YOU ARE CROUPIER! NEVER FORGET!" << std::endl;
-            player = "player's (croupier)";
-        }
-
         std::cout << "Enter " << i+1 << ". " <<  player << " name : " << std::flush;
         std::cin >> playerName;
         playersName.push_back(playerName);
     }
 
+    playersName[playerNumber-1] = "Croupier";
 }
 
 void GameManager::DealInitialCard()
@@ -81,9 +73,10 @@ void GameManager::DealInitialCard()
 
 void GameManager::DealHitCard()
 {
-    for (int i = 0; i < playerNumber + 1; ++i)
+    for (int i = 0; i < playerNumber; ++i)
     {
-         CalculatePlayerInitialHand(playersInitialCards[i], playersName[i], playersPoint[i]);
+        std::cout << std::endl;
+        CalculatePlayerInitialHand(playersInitialCards[i], playersName[i], playersPoint[i]);
 
         bool isCardDealing;
 
@@ -96,21 +89,21 @@ void GameManager::DealHitCard()
             {
                 int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
                 std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-                playersPoint[i] += ConvertCardToPoint(card);
+                playersPoint.push_back(ConvertCardToPoint(card));
                 std::cout << "Your new point is : " << playersPoint[i] << std::endl;
                 cardDeck->DecreaseCardNumber();
-/*
-                if(point == 21)
+
+                if(playersPoint[i] == 21)
                 {
                     std::cout << "Congratulations! BLACKJACK !!" << std::endl;
                 }
 
-                else if (point > 21)
+                else if (playersPoint[i] > 21)
                 {
                     std::cout << "You Have Lost !! Better Luck Next Time." << std::endl;
                     playersName.erase(playersName.begin() + i);
                     exactLosers.push_back(playersName[i]);
-                }*/
+                }
             }
 
         }while (isCardDealing && playersPoint[i] < 21);
@@ -162,7 +155,22 @@ int GameManager::ConvertCardToPoint(std::string& card)
     return 10; // J, K, Q, 10
 }
 
-void GameManager::DesignatePlayersWinOrLose()
+void GameManager::DesignatePlayersWinState()
 {
+    if (exactLosers[exactLosers.size() -1] == "Croupier")
+    {
+        for (auto player: playersName)
+        {
+            exactWinners.push_back(player);
+        }
+        return;
+    }
 
+    else {
+
+        for (int i = 0; i < playersName.size() - 1; ++i)
+        {
+        }
+
+    }
 }

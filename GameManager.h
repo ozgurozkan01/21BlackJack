@@ -22,9 +22,11 @@ class GameManager {
     int playerNumber;
     std::vector<std::string> playersName;
     std::string playersInitialCards[maxPlayerNumber][initialHandCardNumber];
-    int playersPoint[maxPlayerNumber];
+    std::vector<int> playersPoint;
 
     std::vector<std::string> exactLosers;
+    std::vector<std::string> exactWinners;
+    std::vector<std::string> tiedPlayers;
 
 public:
 
@@ -42,7 +44,7 @@ public:
     // Hit Part
     void DealHitCard();
 
-    void DesignatePlayersWinOrLose();
+    void DesignatePlayersWinState();
 
     int ConvertCardToPoint(std::string& card);
 };
