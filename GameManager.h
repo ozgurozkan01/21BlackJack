@@ -24,9 +24,10 @@ class GameManager {
     std::string playersInitialCards[maxPlayerNumber][initialHandCardNumber];
     std::vector<int> playersPoint;
 
-    std::vector<std::string> exactLosers;
-    std::vector<std::string> exactWinners;
-    std::vector<std::string> tiedPlayers;
+    std::vector<std::string> exactWinnerList;
+    std::vector<std::string> exactLoserList;
+    std::vector<std::string> tiedPlayerList;
+
 
 public:
 
@@ -39,14 +40,15 @@ public:
 
     // Initial Part
     void DealInitialCard();
-    int CalculatePlayerInitialHand(std::string* card, std::string& name, int& point);
+    void CalculatePlayerInitialHand(int index);
 
     // Hit Part
     void DealHitCard();
 
-    void DesignatePlayersWinState();
+    void DesignateUnknownStatePlayer();
 
     int ConvertCardToPoint(std::string& card);
+    void PrintPlayersState();
 };
 
 
