@@ -46,7 +46,6 @@ public:
     void DealHitCard();
 
     void DesignateUnknownStatePlayer();
-
     int ConvertCardToPoint(std::string& card);
     void PrintPlayersState();
 };
