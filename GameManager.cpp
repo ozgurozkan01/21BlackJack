@@ -41,7 +41,8 @@ void GameManager::Tick()
 void GameManager::SetPlayerNumber()
 {
     do {
-        std::cout << " You can play with max 7 players !! " << std::endl;
+        std::cout << std::endl;
+        std::cout << " You can play with MAX 7 players !! " << std::endl;
         std::cout << " Enter how many players are gonna play : " << std::flush;
         std::cin >> playerNumber;
     }while(playerNumber > 7);
@@ -84,10 +85,11 @@ void GameManager::DealHitCard()
     for (int i = 0; i < playerNumber; ++i)
     {
         CalculatePlayerInitialHand(i);
-        bool isCardDealing;
+        bool isCardDealing = true;
 
         std::cout << playersName[i] << " point is : " << playersPoint[i] << std::endl;
-        do {
+        while (isCardDealing && playersPoint[i] < 21)
+        {
             std::cout << playersName[i] << ", do you wanna hit card : " << std::flush;
             std::cin >> isCardDealing;
 
@@ -111,7 +113,7 @@ void GameManager::DealHitCard()
                 }
             }
 
-        }while (isCardDealing && playersPoint[i] < 21);
+        }
     }
 }
 
@@ -165,15 +167,14 @@ int GameManager::ConvertCardToPoint(std::string& card)
 
 void GameManager::DesignateUnknownStatePlayer()
 {
-    int croupierValue = playersPoint[playerNumber-1];
-    std::string croupier = playersName[playerNumber-1];
+    int croupierValue = playersPoint[playersPoint.size()-1];
+    std::string croupier = playersName[playersPoint.size()-1];
     playersName.erase(playersName.begin() + (playersName.size() -1));
     playersPoint.erase(playersPoint.begin() + (playersPoint.size() -1));
     playerNumber--;
 
     if (croupierValue > 21)
     {
-        exactLoserList.push_back(croupier);
         for (int i = 0; i < playerNumber; ++i)
         {
             if (playersPoint[i] > 21)
@@ -193,49 +194,45 @@ void GameManager::DesignateUnknownStatePlayer()
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (playersPoint[i] > 21 ||playersPoint[i] < croupierValue)
+            if (playersPoint[i] > 21 || playersPoint[i] < croupierValue)
             {
                 exactLoserList.push_back(playersName[i]);
-                continue;
             }
 
             else if (playersPoint[i] > croupierValue)
             {
                 exactWinnerList.push_back(playersName[i]);
-                continue;
             }
 
             else if (playersPoint[i] == croupierValue)
             {
                 tiedPlayerList.push_back(playersName[i]);
-                continue;
             }
         }
     }
-
 }
 
 void GameManager::PrintPlayersState()
 {
-    std::cout << "WINNERS !" << std::endl;
-    for (auto winner : exactWinnerList)
-    {
-        std::cout << winner << std::endl;
-    }
-    std::cout << std::endl;
+    std::cout << "WINNERS  -  LOSERS  -  TIED" << std::endl;
 
-    std::cout << "LOSERS !" << std::endl;
-    for (auto loser : exactLoserList)
+    for (int i = 0; i < playerNumber; ++i)
     {
-        std::cout << loser << std::endl;
-    }
-    std::cout << std::endl;
+        if (!exactWinnerList.empty() && i < exactWinnerList.size())
+        {
+            std::cout << exactWinnerList[i] << "        ";
+        }
 
+        if (!exactLoserList.empty() && i < exactLoserList.size())
+        {
+            std::cout << exactLoserList[i] << "         ";
+        }
 
-    std::cout << "TIED !" << std::endl;
-    for (auto tied : tiedPlayerList)
-    {
-        std::cout << tied << std::endl;
+        if (!tiedPlayerList.empty() && i < tiedPlayerList.size())
+        {
+            std::cout << tiedPlayerList[i];
+        }
+
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
 }
