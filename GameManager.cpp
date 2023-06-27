@@ -72,13 +72,28 @@ void GameManager::SetPlayerNumber()
 
 void GameManager::SetPlayerName()
 {
+    bool isPlayerNameCorrect = true;
+
     for (int i = 0; i < playerNumber - 1; ++i)
     {
         std::string playerName;
         std::string player = "player's";
         std::cout << "Enter " << i+1 << ". " <<  player << " name : " << std::flush;
         std::cin >> playerName;
-        playersName.push_back(playerName);
+
+        for (auto c : playerName)
+        {
+            if (isdigit(c))
+            {
+                isPlayerNameCorrect = false;
+                break;
+            }
+        }
+
+        if(isPlayerNameCorrect)
+        {
+            playersName.push_back(playerName);
+        }
     }
 
     playersName.push_back("Croupier");
