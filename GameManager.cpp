@@ -7,6 +7,7 @@
 #include "Card.h"
 #include <iostream>
 #include <vector>
+#include <limits>
 
 GameManager::GameManager()
 {
@@ -40,12 +41,30 @@ void GameManager::Tick()
 
 void GameManager::SetPlayerNumber()
 {
+    bool isPlayerNumberCorrect = true;
+    std::string playerAmount;
+
     do {
         std::cout << std::endl;
-        std::cout << " You can play with MAX 7 players !! " << std::endl;
+        std::cout << " You can play with MIN 1 - MAX 7 players !! " << std::endl;
         std::cout << " Enter how many players are gonna play : " << std::flush;
-        std::cin >> playerNumber;
-    }while(playerNumber > 7);
+        std::cin >> playerAmount;
+
+        for (auto c : playerAmount)
+        {
+            if(!isdigit(c))
+            {
+                isPlayerNumberCorrect = false;
+                break;
+            }
+        }
+
+        if (isPlayerNumberCorrect)
+        {
+            playerNumber = std::stoi(playerAmount);
+        }
+
+    }while(playerNumber < 1 || playerNumber > 7 || !isPlayerNumberCorrect);
 
     playerNumber++;
     std::cout << std::endl;
@@ -220,13 +239,17 @@ void GameManager::PrintPlayersState()
     {
         if (!exactWinnerList.empty() && i < exactWinnerList.size())
         {
-            std::cout << exactWinnerList[i] << "        ";
+            std::cout << exactWinnerList[i];
         }
+
+        std::cout << "        ";
 
         if (!exactLoserList.empty() && i < exactLoserList.size())
         {
-            std::cout << exactLoserList[i] << "         ";
+            std::cout << exactLoserList[i];
         }
+
+        std::cout << "       ";
 
         if (!tiedPlayerList.empty() && i < tiedPlayerList.size())
         {
