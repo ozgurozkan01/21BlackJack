@@ -72,28 +72,33 @@ void GameManager::SetPlayerNumber()
 
 void GameManager::SetPlayerName()
 {
-    bool isPlayerNameCorrect = true;
 
+    std::cout << "PLEASE DO NOT USE CHAR IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber - 1; ++i)
     {
-        std::string playerName;
-        std::string player = "player's";
-        std::cout << "Enter " << i+1 << ". " <<  player << " name : " << std::flush;
-        std::cin >> playerName;
+        bool isPlayerNameCorrect = true;
+        do {
+            std::string playerName;
+            std::cout << "Enter " << i+1 << ". player's name : " << std::flush;
+            std::cin >> playerName;
 
-        for (auto c : playerName)
-        {
-            if (isdigit(c))
+            for (auto c : playerName)
             {
-                isPlayerNameCorrect = false;
-                break;
+                if (isdigit(c))
+                {
+                    std::cout << "You cannt use char in name!" << std::endl;
+                    std::cout << std::endl;
+                    isPlayerNameCorrect = false;
+                    break;
+                }
             }
-        }
 
-        if(isPlayerNameCorrect)
-        {
-            playersName.push_back(playerName);
-        }
+            if(isPlayerNameCorrect)
+            {
+                playersName.push_back(playerName);
+            }
+
+        } while (!isPlayerNameCorrect);
     }
 
     playersName.push_back("Croupier");
@@ -248,29 +253,37 @@ void GameManager::DesignateUnknownStatePlayer()
 
 void GameManager::PrintPlayersState()
 {
-    std::cout << "WINNERS  -  LOSERS  -  TIED" << std::endl;
-
-    for (int i = 0; i < playerNumber; ++i)
+    std::cout << "***** WINNER *****" << std::endl;
+    for (auto winner : exactWinnerList)
     {
-        if (!exactWinnerList.empty() && i < exactWinnerList.size())
-        {
-            std::cout << exactWinnerList[i];
-        }
-
-        std::cout << "        ";
-
-        if (!exactLoserList.empty() && i < exactLoserList.size())
-        {
-            std::cout << exactLoserList[i];
-        }
-
-        std::cout << "       ";
-
-        if (!tiedPlayerList.empty() && i < tiedPlayerList.size())
-        {
-            std::cout << tiedPlayerList[i];
-        }
-
-        std::cout << std::endl;
+        std::cout << winner << " - ";
     }
+
+
+    std::cout << std::endl << "***** LOSER *****" << std::endl;
+    for (auto loser : exactLoserList)
+    {
+        std::cout << loser << " - ";
+    }
+
+    std::cout << std::endl << "***** TIED *****" << std::endl;
+    for (auto tied : tiedPlayerList)
+    {
+        std::cout << tied << " - ";
+    }
+
+    /*if (!exactWinnerList.empty() && i < exactWinnerList.size())
+    {
+        std::cout << exactWinnerList[i];
+    }
+
+    if (!exactLoserList.empty() && i < exactLoserList.size())
+    {
+        std::cout << exactLoserList[i];
+    }
+
+    if (!tiedPlayerList.empty() && i < tiedPlayerList.size())
+    {
+        std::cout << tiedPlayerList[i];
+    }*/
 }

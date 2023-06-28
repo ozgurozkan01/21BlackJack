@@ -5,9 +5,17 @@
 #ifndef INC_21BLACKJACK_PLAYER_H
 #define INC_21BLACKJACK_PLAYER_H
 
+#include <iostream>
 
 class Player {
 
+public:
+
+    int point;
+    std::string nickName;
+    std::string initialCards[2];
+
+    Player();
 };
 
 

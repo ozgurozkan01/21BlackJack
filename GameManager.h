@@ -11,23 +11,24 @@
 #define initialHandCardNumber  2
 
 class CardDeck;
+class Player;
 
 class GameManager {
 
-
-
+    Player* players[8];
     CardDeck* cardDeck;
 
     // Player
     int playerNumber;
+/*
     std::vector<std::string> playersName;
     std::string playersInitialCards[maxPlayerNumber][initialHandCardNumber];
     std::vector<int> playersPoint;
+*/
 
     std::vector<std::string> exactWinnerList;
     std::vector<std::string> exactLoserList;
     std::vector<std::string> tiedPlayerList;
-
 
 public:
 

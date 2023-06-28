@@ -3,3 +3,13 @@
 //
 
 #include "Player.h"
+
+Player::Player()
+{
+    point = 0;
+    nickName = "";
+    for (auto card : initialCards)
+    {
+        card = "";
+    }
+}
