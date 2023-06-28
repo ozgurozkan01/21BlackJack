@@ -5,6 +5,7 @@
 #include "GameManager.h"
 #include "CardDeck.h"
 #include "Card.h"
+#include "Player.h"
 #include <iostream>
 #include <vector>
 #include <limits>
@@ -14,7 +15,6 @@ GameManager::GameManager()
     srand(time(nullptr));
 
     cardDeck = new CardDeck();
-
     playerNumber = 0.f;
 
     std::cout << " WELCOME TO 21 BLACKJAKE GAME " << std::endl;
@@ -76,8 +76,11 @@ void GameManager::SetPlayerName()
     std::cout << "PLEASE DO NOT USE CHAR IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber - 1; ++i)
     {
-        bool isPlayerNameCorrect = true;
+        players[i] = new Player();
+        bool isPlayerNameCorrect;
+
         do {
+            isPlayerNameCorrect = true;
             std::string playerName;
             std::cout << "Enter " << i+1 << ". player's name : " << std::flush;
             std::cin >> playerName;
@@ -95,13 +98,14 @@ void GameManager::SetPlayerName()
 
             if(isPlayerNameCorrect)
             {
-                playersName.push_back(playerName);
+                players[i]->nickName = playerName;
             }
 
         } while (!isPlayerNameCorrect);
     }
 
-    playersName.push_back("Croupier");
+    players[playerNumber-1] = new Player();
+    players[playerNumber-1]->nickName = "Croupier";
 }
 
 void GameManager::DealInitialCard()
@@ -112,7 +116,7 @@ void GameManager::DealInitialCard()
         {
             int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
             std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-            playersInitialCards[j][i] = card;
+            players[j]->initialCards[i] = card;
             cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
             cardDeck->DecreaseCardNumber();
         }
@@ -126,27 +130,27 @@ void GameManager::DealHitCard()
         CalculatePlayerInitialHand(i);
         bool isCardDealing = true;
 
-        std::cout << playersName[i] << " point is : " << playersPoint[i] << std::endl;
-        while (isCardDealing && playersPoint[i] < 21)
+        std::cout << players[i]->nickName << " point is : " << players[i]->point << std::endl;
+        while (isCardDealing && players[i]->point < 21)
         {
-            std::cout << playersName[i] << ", do you wanna hit card : " << std::flush;
+            std::cout << players[i]->nickName << ", do you wanna hit card : " << std::flush;
             std::cin >> isCardDealing;
 
             if (isCardDealing)
             {
                 int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
                 std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-                playersPoint[i] += ConvertCardToPoint(card);
-                std::cout << "Your new point is : " << playersPoint[i] << std::endl;
+                players[i]->point += ConvertCardToPoint(card);
+                std::cout << "Your new point is : " << players[i]->point << std::endl;
                 cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
                 cardDeck->DecreaseCardNumber();
 
-                if(playersPoint[i] == 21)
+                if(players[i]->point == 21)
                 {
                     std::cout << "Congratulations! BLACKJACK !!" << std::endl;
                 }
 
-                else if (playersPoint[i] > 21)
+                else if (players[i]->point > 21)
                 {
                     std::cout << "You Have Lost !! Better Luck Next Time." << std::endl;
                 }
@@ -159,35 +163,35 @@ void GameManager::DealHitCard()
 void GameManager::CalculatePlayerInitialHand(int index)
 {
     int point;
-    if (playersInitialCards[index][0] == "A" && playersInitialCards[index][1] == "A")
+    if (players[index]->initialCards[0] == "A" && players[index]->initialCards[1] == "A")
     {
-        std::cout << playersName[index] << " have 2 AS. You can choose 2, 12" << std::endl;
+        std::cout << players[index]->nickName << " have 2 AS. You can choose 2, 12" << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
-    else if (playersInitialCards[index][0] != "A" && playersInitialCards[index][1] == "A")
+    else if (players[index]->initialCards[0] != "A" && players[index]->initialCards[1] == "A")
     {
-        std::cout << playersName[index] << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersInitialCards[index][0]) << " or "
-        << 1 + ConvertCardToPoint(playersInitialCards[index][0]) << std::endl;
+        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCards[0]) << " or "
+        << 1 + ConvertCardToPoint(players[index]->initialCards[0]) << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
-    else if (playersInitialCards[index][0] == "A" && playersInitialCards[index][1] != "A")
+    else if (players[index]->initialCards[0] == "A" && players[index]->initialCards[1] != "A")
     {
-        std::cout << playersName[index] << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(playersInitialCards[index][1]) << " or "
-        << 1 + ConvertCardToPoint(playersInitialCards[index][1]) << std::endl;
+        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCards[1]) << " or "
+        << 1 + ConvertCardToPoint(players[index]->initialCards[1]) << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
     else
     {
-        point = (ConvertCardToPoint(playersInitialCards[index][0]) + ConvertCardToPoint(playersInitialCards[index][1]));
+        point = (ConvertCardToPoint(players[index]->initialCards[0]) + ConvertCardToPoint(players[index]->initialCards[1]));
     };
 
-    playersPoint.push_back(point);
+    players[index]->point = point;
 }
 
 int GameManager::ConvertCardToPoint(std::string& card)
@@ -206,25 +210,23 @@ int GameManager::ConvertCardToPoint(std::string& card)
 
 void GameManager::DesignateUnknownStatePlayer()
 {
-    int croupierValue = playersPoint[playersPoint.size()-1];
-    std::string croupier = playersName[playersPoint.size()-1];
-    playersName.erase(playersName.begin() + (playersName.size() -1));
-    playersPoint.erase(playersPoint.begin() + (playersPoint.size() -1));
+    int croupierValue = players[playerNumber-1]->point;
+    std::string croupier = players[playerNumber-1]->nickName;
     playerNumber--;
 
     if (croupierValue > 21)
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (playersPoint[i] > 21)
+            if (players[i]->point > 21)
             {
-                exactLoserList.push_back(playersName[i]);
+                exactLoserList.push_back(players[i]->nickName);
                 continue;
             }
 
             else
             {
-                exactWinnerList.push_back(playersName[i]);
+                exactWinnerList.push_back(players[i]->nickName);
             }
         }
     }
@@ -233,19 +235,19 @@ void GameManager::DesignateUnknownStatePlayer()
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (playersPoint[i] > 21 || playersPoint[i] < croupierValue)
+            if (players[i]->point > 21 || players[i]->point < croupierValue)
             {
-                exactLoserList.push_back(playersName[i]);
+                exactLoserList.push_back(players[i]->nickName);
             }
 
-            else if (playersPoint[i] > croupierValue)
+            else if (players[i]->point > croupierValue)
             {
-                exactWinnerList.push_back(playersName[i]);
+                exactWinnerList.push_back(players[i]->nickName);
             }
 
-            else if (playersPoint[i] == croupierValue)
+            else if (players[i]->point == croupierValue)
             {
-                tiedPlayerList.push_back(playersName[i]);
+                tiedPlayerList.push_back(players[i]->nickName);
             }
         }
     }
@@ -256,22 +258,22 @@ void GameManager::PrintPlayersState()
     std::cout << "***** WINNER *****" << std::endl;
     for (auto winner : exactWinnerList)
     {
-        std::cout << winner << " - ";
+        std::cout << winner << "  ";
     }
-
 
     std::cout << std::endl << "***** LOSER *****" << std::endl;
     for (auto loser : exactLoserList)
     {
-        std::cout << loser << " - ";
+        std::cout << loser << "  ";
     }
 
     std::cout << std::endl << "***** TIED *****" << std::endl;
     for (auto tied : tiedPlayerList)
     {
-        std::cout << tied << " - ";
+        std::cout << tied << "  ";
     }
 
+    std::cout << std::endl;
     /*if (!exactWinnerList.empty() && i < exactWinnerList.size())
     {
         std::cout << exactWinnerList[i];
