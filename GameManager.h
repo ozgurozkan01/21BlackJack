@@ -9,6 +9,8 @@
 
 #define maxPlayerNumber  8 // including croupier
 #define initialHandCardNumber  2
+#define blackjack 21
+
 
 class CardDeck;
 class Player;
@@ -20,9 +22,9 @@ class GameManager {
 
     int playerNumber;
 
-    std::vector<std::string> exactWinnerList;
-    std::vector<std::string> exactLoserList;
-    std::vector<std::string> tiedPlayerList;
+    std::vector<Player*> winnerList;
+    std::vector<Player*> loserList;
+    std::vector<Player*> tiedPlayerList;
 
 public:
 
@@ -41,8 +43,9 @@ public:
     // Hit Part
     void DealHitCard();
 
-    void DesignateUnknownStatePlayer();
     int ConvertCardToPoint(std::string& card);
+    void DesignatePlayersLastState();
+    void BetsPayOut();
     void PrintPlayersState();
 };
 

@@ -35,7 +35,8 @@ void GameManager::Tick()
     // Hit Part
     DealHitCard();
 
-    DesignateUnknownStatePlayer();
+    DesignatePlayersLastState();
+    BetsPayOut();
     PrintPlayersState();
 }
 
@@ -155,7 +156,7 @@ void GameManager::DealHitCard()
 
         std::cout << std::endl;
         std::cout << players[i]->nickName << " point is : " << players[i]->point << std::endl;
-        while (isCardDealing && players[i]->point < 21)
+        while (isCardDealing && players[i]->point < blackjack)
         {
             std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
@@ -169,12 +170,12 @@ void GameManager::DealHitCard()
                 cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
                 cardDeck->DecreaseCardNumber();
 
-                if(players[i]->point == 21)
+                if(players[i]->point == blackjack)
                 {
                     std::cout << "Congratulations! BLACKJACK !!" << std::endl;
                 }
 
-                else if (players[i]->point > 21)
+                else if (players[i]->point > blackjack)
                 {
                     std::cout << "You Have Lost !! Better Luck Next Time." << std::endl;
                 }
@@ -232,25 +233,25 @@ int GameManager::ConvertCardToPoint(std::string& card)
     return 10; // J, K, Q, 10
 }
 
-void GameManager::DesignateUnknownStatePlayer()
+void GameManager::DesignatePlayersLastState()
 {
     int croupierValue = players[playerNumber-1]->point;
     std::string croupier = players[playerNumber-1]->nickName;
     playerNumber--;
 
-    if (croupierValue > 21)
+    if (croupierValue > blackjack)
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (players[i]->point > 21)
+            if (players[i]->point > blackjack)
             {
-                exactLoserList.push_back(players[i]->nickName);
+                loserList.push_back(players[i]);
                 continue;
             }
 
             else
             {
-                exactWinnerList.push_back(players[i]->nickName);
+                winnerList.push_back(players[i]);
             }
         }
     }
@@ -259,20 +260,41 @@ void GameManager::DesignateUnknownStatePlayer()
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (players[i]->point > 21 || players[i]->point < croupierValue)
+            if (players[i]->point > blackjack || players[i]->point < croupierValue)
             {
-                exactLoserList.push_back(players[i]->nickName);
+                loserList.push_back(players[i]);
             }
 
             else if (players[i]->point > croupierValue)
             {
-                exactWinnerList.push_back(players[i]->nickName);
+                winnerList.push_back(players[i]);
             }
 
             else if (players[i]->point == croupierValue)
             {
-                tiedPlayerList.push_back(players[i]->nickName);
+                tiedPlayerList.push_back(players[i]);
             }
+        }
+    }
+}
+
+void GameManager::BetsPayOut()
+{
+    for (auto loser : loserList)
+    {
+        loser->wallet -= loser->bet;
+    }
+
+    for (auto winner : winnerList)
+    {
+        if (winner->point == blackjack)
+        {
+            winner->wallet += (winner->bet * (3/2));
+        }
+
+        else
+        {
+            winner->wallet += winner->bet;
         }
     }
 }
@@ -280,21 +302,21 @@ void GameManager::DesignateUnknownStatePlayer()
 void GameManager::PrintPlayersState()
 {
     std::cout << "***** WINNER *****" << std::endl;
-    for (auto winner : exactWinnerList)
+    for (auto winner : winnerList)
     {
-        std::cout << winner << "  ";
+        std::cout << winner->nickName << "  ";
     }
 
     std::cout << std::endl << "***** LOSER *****" << std::endl;
-    for (auto loser : exactLoserList)
+    for (auto loser : loserList)
     {
-        std::cout << loser << "  ";
+        std::cout << loser->nickName << "  ";
     }
 
     std::cout << std::endl << "***** TIED *****" << std::endl;
     for (auto tied : tiedPlayerList)
     {
-        std::cout << tied << "  ";
+        std::cout << tied->nickName << "  ";
     }
 
     std::cout << std::endl << std::endl;
