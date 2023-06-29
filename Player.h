@@ -14,7 +14,8 @@ public:
     int point;
     std::string nickName;
     std::string initialCards[2];
-
+    int wallet;
+    int bet;
     Player();
 };
 

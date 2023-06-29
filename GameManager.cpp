@@ -8,7 +8,6 @@
 #include "Player.h"
 #include <iostream>
 #include <vector>
-#include <limits>
 
 GameManager::GameManager()
 {
@@ -29,6 +28,8 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
+    PlaceBets();
+
     // Initial Part
     DealInitialCard();
 
@@ -41,10 +42,12 @@ void GameManager::Tick()
 
 void GameManager::SetPlayerNumber()
 {
-    bool isPlayerNumberCorrect = true;
+    bool isPlayerNumberCorrect;
     std::string playerAmount;
-
     do {
+
+        isPlayerNumberCorrect = true;
+
         std::cout << std::endl;
         std::cout << " You can play with MIN 1 - MAX 7 players !! " << std::endl;
         std::cout << " Enter how many players are gonna play : " << std::flush;
@@ -89,7 +92,7 @@ void GameManager::SetPlayerName()
             {
                 if (isdigit(c))
                 {
-                    std::cout << "You cannt use char in name!" << std::endl;
+                    std::cout << "You cannot use char in name!" << std::endl;
                     std::cout << std::endl;
                     isPlayerNameCorrect = false;
                     break;
@@ -106,6 +109,27 @@ void GameManager::SetPlayerName()
 
     players[playerNumber-1] = new Player();
     players[playerNumber-1]->nickName = "Croupier";
+}
+
+void GameManager::PlaceBets()
+{
+    bool isBetAcceptable;
+
+    for (auto player : players)
+    {
+        do
+        {
+            isBetAcceptable = true;
+            std::cout << player->nickName << ", how much do you want to place as bet : " << std::flush;
+            std::cin >> player->bet;
+
+            if (player->bet > player->wallet)
+            {
+                std::cout << "Sorry, you does not have enough money in your wallet!!" << std::endl;
+                isBetAcceptable = false;
+            }
+        } while (!isBetAcceptable);
+    }
 }
 
 void GameManager::DealInitialCard()
@@ -130,10 +154,11 @@ void GameManager::DealHitCard()
         CalculatePlayerInitialHand(i);
         bool isCardDealing = true;
 
+        std::cout << std::endl;
         std::cout << players[i]->nickName << " point is : " << players[i]->point << std::endl;
         while (isCardDealing && players[i]->point < 21)
         {
-            std::cout << players[i]->nickName << ", do you wanna hit card : " << std::flush;
+            std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
 
             if (isCardDealing)
@@ -273,19 +298,5 @@ void GameManager::PrintPlayersState()
         std::cout << tied << "  ";
     }
 
-    std::cout << std::endl;
-    /*if (!exactWinnerList.empty() && i < exactWinnerList.size())
-    {
-        std::cout << exactWinnerList[i];
-    }
-
-    if (!exactLoserList.empty() && i < exactLoserList.size())
-    {
-        std::cout << exactLoserList[i];
-    }
-
-    if (!tiedPlayerList.empty() && i < tiedPlayerList.size())
-    {
-        std::cout << tiedPlayerList[i];
-    }*/
+    std::cout << std::endl << std::endl;
 }

@@ -18,11 +18,7 @@ class GameManager {
     Player* players[maxPlayerNumber];
     CardDeck* cardDeck;
 
-    // Player
     int playerNumber;
-    /*      std::vector<std::string> playersName;
-       std::string playersInitialCards[maxPlayerNumber][initialHandCardNumber];
-       std::vector<int> playersPoint;*/
 
     std::vector<std::string> exactWinnerList;
     std::vector<std::string> exactLoserList;
@@ -36,6 +32,8 @@ public:
 
     void SetPlayerNumber();
     void SetPlayerName();
+
+    void PlaceBets();
 
     // Initial Part
     void DealInitialCard();

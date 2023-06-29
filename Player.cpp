@@ -12,4 +12,6 @@ Player::Player()
     {
         card = "";
     }
+    wallet = 0;
+    bet = 0;
 }
