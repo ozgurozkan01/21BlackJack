@@ -139,9 +139,11 @@ void GameManager::DealInitialCard()
         for (int j = 0; j < playerNumber; ++j)
         {
             int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
-            std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-            players[j]->initialCards[i] = card;
+            Card* cardHolder = cardDeck->GetDeck()[cardIndex];
+            std::string cardValue = cardHolder->GetCardValue();
+            players[j]->initialCardValues[i] = cardValue;
             cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
+            cardDeck->GetDeck().push_back(cardHolder);
             cardDeck->DecreaseCardNumber();
         }
     }
@@ -188,32 +190,32 @@ void GameManager::DealHitCard()
 void GameManager::CalculatePlayerInitialHand(int index)
 {
     int point;
-    if (players[index]->initialCards[0] == "A" && players[index]->initialCards[1] == "A")
+    if (players[index]->initialCardValues[0] == "A" && players[index]->initialCardValues[1] == "A")
     {
         std::cout << players[index]->nickName << " have 2 AS. You can choose 2, 12" << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
-    else if (players[index]->initialCards[0] != "A" && players[index]->initialCards[1] == "A")
+    else if (players[index]->initialCardValues[0] != "A" && players[index]->initialCardValues[1] == "A")
     {
-        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCards[0]) << " or "
-        << 1 + ConvertCardToPoint(players[index]->initialCards[0]) << std::endl;
+        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCardValues[0]) << " or "
+                  << 1 + ConvertCardToPoint(players[index]->initialCardValues[0]) << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
-    else if (players[index]->initialCards[0] == "A" && players[index]->initialCards[1] != "A")
+    else if (players[index]->initialCardValues[0] == "A" && players[index]->initialCardValues[1] != "A")
     {
-        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCards[1]) << " or "
-        << 1 + ConvertCardToPoint(players[index]->initialCards[1]) << std::endl;
+        std::cout << players[index]->nickName << " have 1 AS. You can choose " << 11 + ConvertCardToPoint(players[index]->initialCardValues[1]) << " or "
+                  << 1 + ConvertCardToPoint(players[index]->initialCardValues[1]) << std::endl;
         std::cout << "Enter your point choice : " << std::flush;
         std::cin >> point;
     }
 
     else
     {
-        point = (ConvertCardToPoint(players[index]->initialCards[0]) + ConvertCardToPoint(players[index]->initialCards[1]));
+        point = (ConvertCardToPoint(players[index]->initialCardValues[0]) + ConvertCardToPoint(players[index]->initialCardValues[1]));
     };
 
     players[index]->point = point;

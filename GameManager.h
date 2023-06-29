@@ -8,7 +8,6 @@
 #include <string>
 
 #define maxPlayerNumber  8 // including croupier
-#define initialHandCardNumber  2
 #define blackjack 21
 
 

@@ -6,6 +6,7 @@
 #define INC_21BLACKJACK_PLAYER_H
 
 #include <iostream>
+#define initialHandCardNumber  2
 
 class Player {
 
@@ -13,7 +14,7 @@ public:
 
     int point;
     std::string nickName;
-    std::string initialCards[2];
+    std::string initialCardValues[initialHandCardNumber];
     int wallet;
     int bet;
 
