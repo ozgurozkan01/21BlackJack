@@ -27,6 +27,7 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
+    FillUpWallet();
     PlaceBets();
 
     // Initial Part
@@ -111,6 +112,17 @@ void GameManager::SetPlayerName()
     players[playerNumber-1]->nickName = "Croupier";
 }
 
+
+void GameManager::FillUpWallet()
+{
+    for(auto player : players)
+    {
+        std::cout << "How much do you want to fill up the wallet : " << std::flush;
+        std::cin >> player->wallet;
+    }
+}
+
+
 void GameManager::PlaceBets()
 {
     bool isBetAcceptable;
@@ -123,11 +135,20 @@ void GameManager::PlaceBets()
             std::cout << player->nickName << ", how much do you want to place as bet : " << std::flush;
             std::cin >> player->bet;
 
+            if (player->bet >= minBet && player->bet <= maxBet)
+            {
+                std::cout << "Sorry, your bet amount is not acceptable!" << std::endl;
+                std::cout << "You should place bet between 10 and 100.000!" << std::endl;
+                isBetAcceptable = false;
+                continue;
+            }
+
             if (player->bet > player->wallet)
             {
                 std::cout << "Sorry, you does not have enough money in your wallet!!" << std::endl;
                 isBetAcceptable = false;
             }
+
         } while (!isBetAcceptable);
     }
 }

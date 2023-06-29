@@ -21,6 +21,9 @@ class GameManager {
 
     int playerNumber;
 
+    const int minBet = 10;
+    const int maxBet = 10000;
+
     std::vector<Player*> winnerList;
     std::vector<Player*> loserList;
     std::vector<Player*> tiedPlayerList;
@@ -33,6 +36,7 @@ public:
 
     void SetPlayerNumber();
     void SetPlayerName();
+    void FillUpWallet();
     void PlaceBets();
 
     // Initial Part
