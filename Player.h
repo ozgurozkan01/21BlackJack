@@ -16,6 +16,7 @@ public:
     std::string initialCards[2];
     int wallet;
     int bet;
+
     Player();
 };
 

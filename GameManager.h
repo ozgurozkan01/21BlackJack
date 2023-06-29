@@ -32,7 +32,6 @@ public:
 
     void SetPlayerNumber();
     void SetPlayerName();
-
     void PlaceBets();
 
     // Initial Part
