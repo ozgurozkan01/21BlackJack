@@ -115,10 +115,23 @@ void GameManager::SetPlayerName()
 
 void GameManager::FillUpWallet()
 {
+    bool isAcceptableMoney;
+    std::cout << "You should enter minimum bet amount (10 Dolar) to take a seat at the table in Blackjack!";
     for(auto player : players)
     {
-        std::cout << "How much do you want to fill up the wallet : " << std::flush;
-        std::cin >> player->wallet;
+        do
+        {
+            isAcceptableMoney = true;
+            std::cout << player->nickName << ", how much do you want to fill up the wallet : " << std::flush;
+            std::cin >> player->wallet;
+
+            if (player->wallet < minBet)
+            {
+                std::cout << "You have entered wrong amount of money! TRY AGAIN!" << std::endl;
+                isAcceptableMoney = false;
+            }
+
+        }while(!isAcceptableMoney);
     }
 }
 
