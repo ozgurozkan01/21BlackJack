@@ -4,7 +4,9 @@
 #include "GameManager.h"
 #include "CardDeck.h"
 #include "Card.h"
+#include "BasePlayer.h"
 #include "Player.h"
+#include "Croupier.h"
 #include <iostream>
 #include <vector>
 
@@ -80,7 +82,8 @@ void GameManager::SetPlayerName()
     std::cout << "PLEASE DO NOT USE CHAR IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber - 1; ++i)
     {
-        players[i] = new Player();
+        mainPlayers[i] = new Player();
+        players[i] = mainPlayers[i];
         bool isPlayerNameCorrect;
 
         do {
@@ -108,7 +111,8 @@ void GameManager::SetPlayerName()
         } while (!isPlayerNameCorrect);
     }
 
-    players[playerNumber-1] = new Player();
+    croupier = new Croupier();
+    players[playerNumber-1] = croupier;
     players[playerNumber-1]->nickName = "Croupier";
 }
 
@@ -122,10 +126,10 @@ void GameManager::FillUpWallet()
         do
         {
             isAcceptableMoney = true;
-            std::cout << players[i]->nickName << ", how much do you want to fill up the wallet : " << std::flush;
-            std::cin >> players[i]->wallet;
+            std::cout << mainPlayers[i]->nickName << ", how much do you want to fill up the wallet : " << std::flush;
+            std::cin >> mainPlayers[i]->wallet;
 
-            if (players[i]->wallet < minBet)
+            if (mainPlayers[i]->wallet < minBet)
             {
                 std::cout << "You have entered wrong amount of money! TRY AGAIN!" << std::endl;
                 isAcceptableMoney = false;
@@ -140,15 +144,15 @@ void GameManager::PlaceBets()
 {
     bool isBetAcceptable;
 
-    for (auto player : players)
+    for (auto mainPlayer : mainPlayers)
     {
         do
         {
             isBetAcceptable = true;
-            std::cout << player->nickName << ", how much do you want to place as bet : " << std::flush;
-            std::cin >> player->bet;
+            std::cout << mainPlayer->nickName << ", how much do you want to place as bet : " << std::flush;
+            std::cin >> mainPlayer->bet;
 
-            if (player->bet >= minBet && player->bet <= maxBet)
+            if (mainPlayer->bet >= minBet && mainPlayer->bet <= maxBet)
             {
                 std::cout << "Sorry, your bet amount is not acceptable!" << std::endl;
                 std::cout << "You should place bet between 10 and 100.000!" << std::endl;
@@ -156,7 +160,7 @@ void GameManager::PlaceBets()
                 continue;
             }
 
-            if (player->bet > player->wallet)
+            if (mainPlayer->bet > mainPlayer->wallet)
             {
                 std::cout << "Sorry, you does not have enough money in your wallet!!" << std::endl;
                 isBetAcceptable = false;
@@ -271,23 +275,23 @@ int GameManager::ConvertCardToPoint(std::string& card)
 
 void GameManager::DesignatePlayersLastState()
 {
-    int croupierValue = players[playerNumber-1]->point;
-    std::string croupier = players[playerNumber-1]->nickName;
+    int croupierValue = croupier->point;
+    std::string croupierName = croupier->nickName;
     playerNumber--;
 
     if (croupierValue > blackjack)
     {
-        for (int i = 0; i < playerNumber; ++i)
+        for (int i = 0; i < playerNumber-1; ++i)
         {
-            if (players[i]->point > blackjack)
+            if (mainPlayers[i]->point > blackjack)
             {
-                loserList.push_back(players[i]);
+                loserList.push_back(mainPlayers[i]);
                 continue;
             }
 
             else
             {
-                winnerList.push_back(players[i]);
+                winnerList.push_back(mainPlayers[i]);
             }
         }
     }
@@ -296,19 +300,19 @@ void GameManager::DesignatePlayersLastState()
     {
         for (int i = 0; i < playerNumber; ++i)
         {
-            if (players[i]->point > blackjack || players[i]->point < croupierValue)
+            if (mainPlayers[i]->point > blackjack || mainPlayers[i]->point < croupierValue)
             {
-                loserList.push_back(players[i]);
+                loserList.push_back(mainPlayers[i]);
             }
 
-            else if (players[i]->point > croupierValue)
+            else if (mainPlayers[i]->point > croupierValue)
             {
-                winnerList.push_back(players[i]);
+                winnerList.push_back(mainPlayers[i]);
             }
 
-            else if (players[i]->point == croupierValue)
+            else if (mainPlayers[i]->point == croupierValue)
             {
-                tiedPlayerList.push_back(players[i]);
+                tiedPlayerList.push_back(mainPlayers[i]);
             }
         }
     }

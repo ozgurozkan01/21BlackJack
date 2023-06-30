@@ -8,16 +8,23 @@
 #include <string>
 
 #define maxPlayerNumber  8 // including croupier
+#define mainPlayerNumber 7
 #define blackjack 21
 
 
 class CardDeck;
+class BasePlayer;
 class Player;
+class Croupier;
 
 class GameManager {
 
-    Player* players[maxPlayerNumber];
+    BasePlayer* players[maxPlayerNumber];
+    Player* mainPlayers[mainPlayerNumber];
+    Croupier* croupier;
+
     CardDeck* cardDeck;
+
 
     int playerNumber;
 
