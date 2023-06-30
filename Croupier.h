@@ -5,9 +5,14 @@
 #ifndef INC_21BLACKJACK_CROUPIER_H
 #define INC_21BLACKJACK_CROUPIER_H
 
+#include "BasePlayer.h"
+#include <iostream>
 
-class Croupier {
+class Croupier : public BasePlayer {
 
+public:
+
+    Croupier();
 };
 
 

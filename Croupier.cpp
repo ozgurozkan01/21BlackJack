@@ -3,3 +3,7 @@
 //
 
 #include "Croupier.h"
+
+Croupier::Croupier()
+{
+}

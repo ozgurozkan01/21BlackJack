@@ -5,16 +5,13 @@
 #ifndef INC_21BLACKJACK_PLAYER_H
 #define INC_21BLACKJACK_PLAYER_H
 
+#include "BasePlayer.h"
 #include <iostream>
-#define initialHandCardNumber  2
 
-class Player {
+
+class Player : public BasePlayer{
 
 public:
-
-    int point;
-    std::string nickName;
-    std::string initialCardValues[initialHandCardNumber];
     int wallet;
     int bet;
 
