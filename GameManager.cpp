@@ -4,7 +4,6 @@
 #include "GameManager.h"
 #include "CardDeck.h"
 #include "Card.h"
-#include "BasePlayer.h"
 #include "Player.h"
 #include "Croupier.h"
 #include <iostream>
@@ -329,7 +328,7 @@ void GameManager::BetsPayOut()
     {
         if (winner->point == blackjack)
         {
-            winner->wallet += (winner->bet * (3/2));
+            winner->wallet += (winner->bet * 2);
         }
 
         else
