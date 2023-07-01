@@ -24,15 +24,15 @@ class GameManager {
     Croupier* croupier{};
     CardDeck* cardDeck;
 
-    int playerNumber;
-
-    const int minBet = 10;
-    const int maxBet = 10000;
-
     std::vector<Player*> winnerList;
     std::vector<Player*> loserList;
     std::vector<Player*> tiedPlayerList;
-    
+
+
+    int playerNumber;
+    const int minBet = 10;
+    const int maxBet = 10000;
+
 public:
 
     GameManager();

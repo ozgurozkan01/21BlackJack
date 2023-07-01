@@ -17,8 +17,8 @@ GameManager::GameManager()
     cardDeck = new CardDeck();
     playerNumber = 0.f;
 
-    std::cout << " WELCOME TO 21 BLACKJAKE GAME " << std::endl;
-    std::cout << " BEST OF LUCK !! " << std::endl;
+    std::cout << "********** WELCOME TO 21 BLACKJAKE GAME **********" << std::endl;
+    std::cout << "***************** BEST OF LUCK! ******************" << std::endl;
 }
 
 void GameManager::BeginPlay()
@@ -29,8 +29,8 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
-    FillUpWallet();
-    PlaceBets();
+/*    FillUpWallet();
+    PlaceBets();*/
 
     // Initial Part
     DealInitialCard();
@@ -81,7 +81,7 @@ void GameManager::SetPlayerNumber()
 void GameManager::SetPlayerName()
 {
 
-    std::cout << "PLEASE DO NOT USE CHAR IN NAME !" << std::endl;
+    std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber - 1; ++i)
     {
         mainPlayers[i] = new Player();
@@ -206,10 +206,12 @@ void GameManager::DealHitCard()
             if (isCardDealing)
             {
                 int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
-                std::string card = cardDeck->GetDeck()[cardIndex]->GetCardValue();
-                players[i]->point += ConvertCardToPoint(card);
+                Card* cardHolder = cardDeck->GetDeck()[cardIndex];
+                std::string cardValue = cardHolder->GetCardValue();
+                players[i]->point += ConvertCardToPoint(cardValue);
                 std::cout << "Your new point is : " << players[i]->point << std::endl;
                 cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
+                cardDeck->GetDeck().push_back(cardHolder);
                 cardDeck->DecreaseCardNumber();
 
                 if(players[i]->point == blackjack)
@@ -277,6 +279,8 @@ int GameManager::ConvertCardToPoint(std::string& card)
 
 void GameManager::DesignatePlayersLastState()
 {
+    if (croupier == nullptr) return;
+
     int croupierValue = croupier->point;
     std::string croupierName = croupier->nickName;
     playerNumber--;
@@ -366,7 +370,7 @@ void GameManager::PrintPlayersState()
 
 void GameManager::GameRoundEnd()
 {
-    std::cout << "This round ended! New round will start after 3 seconds!" << std::endl;
+    std::cout << "This round ended! New round will start after 5 seconds!" << std::endl;
 }
 
 void GameManager::NewRoundTimer()
@@ -376,9 +380,13 @@ void GameManager::NewRoundTimer()
 
     for (int i = 0; i < newRoundBeginningTime; ++i)
     {
-        system("cls");
         std::cout << "Time Remaining : " << timer << std::endl;
         timer--;
         sleep(1);
     }
+
+    system("cls");
+
+    std::cout << "********** Welcome To New BlackJack Round !! **********" << std::endl;
+    std::cout << "    **************** Best Of Luck!! ****************" << std::endl;
 }
