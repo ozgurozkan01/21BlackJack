@@ -8,6 +8,7 @@
 #include "Croupier.h"
 #include <iostream>
 #include <vector>
+#include <unistd.h>
 
 GameManager::GameManager()
 {
@@ -40,6 +41,8 @@ void GameManager::Tick()
     DesignatePlayersLastState();
     BetsPayOut();
     PrintPlayersState();
+    GameRoundEnd();
+    NewRoundTimer();
 }
 
 void GameManager::SetPlayerNumber()
@@ -253,7 +256,7 @@ void GameManager::CalculatePlayerInitialHand(int index)
     else
     {
         point = (ConvertCardToPoint(players[index]->initialCardValues[0]) + ConvertCardToPoint(players[index]->initialCardValues[1]));
-    };
+    }
 
     players[index]->point = point;
 }
@@ -359,4 +362,23 @@ void GameManager::PrintPlayersState()
     }
 
     std::cout << std::endl << std::endl;
+}
+
+void GameManager::GameRoundEnd()
+{
+    std::cout << "This round ended! New round will start after 3 seconds!" << std::endl;
+}
+
+void GameManager::NewRoundTimer()
+{
+    const int newRoundBeginningTime = 5;
+    int timer = newRoundBeginningTime;
+
+    for (int i = 0; i < newRoundBeginningTime; ++i)
+    {
+        system("cls");
+        std::cout << "Time Remaining : " << timer << std::endl;
+        timer--;
+        sleep(1);
+    }
 }

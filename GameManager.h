@@ -19,9 +19,9 @@ class Croupier;
 
 class GameManager {
 
-    BasePlayer* players[maxPlayerNumber];
-    Player* mainPlayers[mainPlayerNumber];
-    Croupier* croupier;
+    BasePlayer* players[maxPlayerNumber]{};
+    Player* mainPlayers[mainPlayerNumber]{};
+    Croupier* croupier{};
 
     CardDeck* cardDeck;
 
@@ -34,7 +34,6 @@ class GameManager {
     std::vector<Player*> winnerList;
     std::vector<Player*> loserList;
     std::vector<Player*> tiedPlayerList;
-
 public:
 
     GameManager();
@@ -53,10 +52,12 @@ public:
     // Hit Part
     void DealHitCard();
 
-    int ConvertCardToPoint(std::string& card);
+    static int ConvertCardToPoint(std::string& card);
     void DesignatePlayersLastState();
     void BetsPayOut();
     void PrintPlayersState();
+    static void GameRoundEnd();
+    static void NewRoundTimer();
 };
 
 
