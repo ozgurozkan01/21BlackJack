@@ -46,6 +46,7 @@ public:
 
     // Initial Part
     void DealInitialCard();
+    bool DoesHandHaveACE(int index);
     void CalculatePlayerInitialHand(int index);
 
     // Hit Part
@@ -57,6 +58,7 @@ public:
     void PrintPlayersState();
     static void GameRoundEnd();
     static void NewRoundTimer();
+    std::string GetDealCard();
 };
 
 
