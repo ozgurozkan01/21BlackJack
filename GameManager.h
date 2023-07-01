@@ -22,9 +22,7 @@ class GameManager {
     BasePlayer* players[maxPlayerNumber]{};
     Player* mainPlayers[mainPlayerNumber]{};
     Croupier* croupier{};
-
     CardDeck* cardDeck;
-
 
     int playerNumber;
 
@@ -34,6 +32,7 @@ class GameManager {
     std::vector<Player*> winnerList;
     std::vector<Player*> loserList;
     std::vector<Player*> tiedPlayerList;
+    
 public:
 
     GameManager();
