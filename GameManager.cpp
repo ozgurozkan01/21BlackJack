@@ -29,8 +29,8 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
-    FillUpWallet();
-    PlaceBets();
+    //FillUpWallet();
+    //PlaceBets();
     DealInitialCard();
     DealHitCard();
     DesignatePlayersLastState();
@@ -79,8 +79,6 @@ void GameManager::SetPlayerName()
     std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber - 1; ++i)
     {
-        mainPlayers[i] = new Player();
-        players[i] = mainPlayers[i];
         bool isPlayerNameCorrect;
 
         do {
@@ -102,7 +100,9 @@ void GameManager::SetPlayerName()
 
             if(isPlayerNameCorrect)
             {
-                players[i]->nickName = playerName;
+                mainPlayers[i] = new Player();
+                mainPlayers[i]->nickName = playerName;
+                players[i] = mainPlayers[i];
             }
 
         } while (!isPlayerNameCorrect);
@@ -228,7 +228,7 @@ void GameManager::DealHitCard()
             if (players[i]->nickName == croupier->nickName && players[i]->point < 17 && !isCardDealing)
             {
                 isCardDealing = true;
-                std::cout << "You are CROUPIER, you have to want card dealing !!!!!" << std::endl;
+                std::cout << "You are CROUPIER, you have to want card dealing, if your number less than 17!!!" << std::endl;
             }
 
         }while (isCardDealing && players[i]->point < blackjack);
@@ -425,4 +425,5 @@ void GameManager::NewRoundTimer()
 
     std::cout << "********** Welcome To New BlackJack Round !! **********" << std::endl;
     std::cout << "    **************** Best Of Luck!! ****************" << std::endl;
+    playerNumber++;
 }

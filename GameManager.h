@@ -57,7 +57,7 @@ public:
     void BetsPayOut();
     void PrintPlayersState();
     static void GameRoundEnd();
-    static void NewRoundTimer();
+    void NewRoundTimer();
     std::string GetDealCard();
 };
 
