@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#define maxPlayerNumber  8 // including croupier
+#define playerNumberWithCroupier  8 // including croupier
 #define mainPlayerNumber 7
 #define blackjack 21
 
@@ -19,9 +19,9 @@ class Croupier;
 
 class GameManager {
 
-    BasePlayer* players[maxPlayerNumber]{};
+    BasePlayer* players[playerNumberWithCroupier]{};
     Player* mainPlayers[mainPlayerNumber]{};
-    Croupier* croupier{};
+    Croupier* croupier;
     CardDeck* cardDeck;
 
     std::vector<Player*> winnerList;

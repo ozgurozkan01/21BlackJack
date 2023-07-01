@@ -29,16 +29,10 @@ void GameManager::BeginPlay()
 
 void GameManager::Tick()
 {
-/*    FillUpWallet();
-    PlaceBets();*/
-
-    // Initial Part
-
-        DealInitialCard();
-
-    // Hit Part
+    FillUpWallet();
+    PlaceBets();
+    DealInitialCard();
     DealHitCard();
-
     DesignatePlayersLastState();
     BetsPayOut();
     PrintPlayersState();
@@ -204,14 +198,15 @@ void GameManager::DealHitCard()
     for (int i = 0; i < playerNumber; ++i)
     {
         CalculatePlayerInitialHand(i);
-        bool isCardDealing = true;
+        bool isCardDealing = false;
 
         std::cout << std::endl;
         std::cout << players[i]->nickName << " point is : " << players[i]->point << std::endl;
-        while (isCardDealing && players[i]->point < blackjack)
-        {
+
+        do {
             std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
+
 
             if (isCardDealing)
             {
@@ -219,7 +214,7 @@ void GameManager::DealHitCard()
                 players[i]->point += ConvertCardToPoint(cardValue);
                 std::cout << "Your new point is : " << players[i]->point << std::endl;
 
-                if(players[i]->point == blackjack)
+                if (players[i]->point == blackjack)
                 {
                     std::cout << "Congratulations! BLACKJACK !!" << std::endl;
                 }
@@ -230,7 +225,13 @@ void GameManager::DealHitCard()
                 }
             }
 
-        }
+            if (players[i]->nickName == croupier->nickName && players[i]->point < 17 && !isCardDealing)
+            {
+                isCardDealing = true;
+                std::cout << "You are CROUPIER, you have to want card dealing !!!!!" << std::endl;
+            }
+
+        }while (isCardDealing && players[i]->point < blackjack);
     }
 }
 
