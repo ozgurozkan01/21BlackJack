@@ -331,7 +331,7 @@ void GameManager::DesignatePlayersLastState()
 
     if (croupierValue > blackjack)
     {
-        for (int i = 0; i < playerNumber-1; ++i)
+        for (int i = 0; i < playerNumber; ++i)
         {
             if (mainPlayers[i]->point > blackjack)
             {
@@ -394,19 +394,19 @@ void GameManager::PrintPlayersState()
     std::cout << "***** WINNER *****" << std::endl;
     for (auto winner : winnerList)
     {
-        std::cout << winner->nickName << "  ";
+        std::cout << "NAME : " << winner->nickName << ", WALLET : " << winner->wallet << std::endl;
     }
 
     std::cout << std::endl << "***** LOSER *****" << std::endl;
     for (auto loser : loserList)
     {
-        std::cout << loser->nickName << "  ";
+        std::cout << "NAME : " << loser->nickName << ", WALLET : " << loser->wallet << std::endl ;
     }
 
     std::cout << std::endl << "***** TIED *****" << std::endl;
     for (auto tied : tiedPlayerList)
     {
-        std::cout << tied->nickName << "  ";
+        std::cout << "NAME : " << tied->nickName << ", WALLET : " << tied->wallet << std::endl;
     }
 
     std::cout << std::endl << std::endl;
