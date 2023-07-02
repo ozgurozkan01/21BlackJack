@@ -1,6 +1,3 @@
-//
-// Created by ozgur on 6/5/2023.
-//
 #include "GameManager.h"
 #include "CardDeck.h"
 #include "Card.h"
@@ -57,6 +54,7 @@ void GameManager::SetPlayerNumber()
         {
             if(!isdigit(c))
             {
+                std::cout << "You cannot enter anything but number!" << std::endl;
                 isPlayerNumberCorrect = false;
                 break;
             }
@@ -204,6 +202,12 @@ void GameManager::DealHitCard()
         std::cout << players[i]->nickName << " point is : " << players[i]->point << std::endl;
 
         do {
+
+            if (players[i]->nickName == croupier->nickName && players[i]->point < 17)
+            {
+                std::cout << "You are CROUPIER, so you have to want to card to get through 17 point !!" << std::endl;
+            }
+
             std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
 
