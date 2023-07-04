@@ -22,16 +22,16 @@ void GameManager::BeginPlay()
 {
     SetPlayerNumber();
     SetPlayerName();
+    FillUpWallet();
 }
 
 void GameManager::Tick()
 {
-    FillUpWallet();
     PlaceBets();
     DealInitialCard();
     DealHitCard();
     DesignatePlayersLastState();
-    BetsPayOut();
+    //BetsPayOut();
     PrintPlayersState();
     GameRoundEnd();
     NewRoundTimer();
@@ -147,7 +147,7 @@ void GameManager::PlaceBets()
             std::cout << mainPlayers[i]->nickName << ", how much do you want to place as bet : ";
             std::cin >> mainPlayers[i]->bet;
 
-            if (mainPlayers[i]->bet <= minBet || mainPlayers[i]->bet >= maxBet)
+            if (mainPlayers[i]->bet < minBet || mainPlayers[i]->bet > maxBet)
             {
                 std::cout << "Sorry, your bet amount is not acceptable!" << std::endl;
                 std::cout << "You should place bet between 10 and 100.000!" << std::endl;
@@ -336,12 +336,14 @@ void GameManager::DesignatePlayersLastState()
             if (mainPlayers[i]->point > blackjack)
             {
                 loserList.push_back(mainPlayers[i]);
+                DecrementWallet(mainPlayers[i]);
                 continue;
             }
 
             else
             {
                 winnerList.push_back(mainPlayers[i]);
+                IncrementWallet(mainPlayers[i]);
             }
         }
     }
@@ -353,38 +355,19 @@ void GameManager::DesignatePlayersLastState()
             if (mainPlayers[i]->point > blackjack || mainPlayers[i]->point < croupierValue)
             {
                 loserList.push_back(mainPlayers[i]);
+                DecrementWallet(mainPlayers[i]);
             }
 
             else if (mainPlayers[i]->point > croupierValue)
             {
                 winnerList.push_back(mainPlayers[i]);
+                IncrementWallet(mainPlayers[i]);
             }
 
             else if (mainPlayers[i]->point == croupierValue)
             {
                 tiedPlayerList.push_back(mainPlayers[i]);
             }
-        }
-    }
-}
-
-void GameManager::BetsPayOut()
-{
-    for (auto loser : loserList)
-    {
-        loser->wallet -= loser->bet;
-    }
-
-    for (auto winner : winnerList)
-    {
-        if (winner->point == blackjack)
-        {
-            winner->wallet += (winner->bet * 2);
-        }
-
-        else
-        {
-            winner->wallet += winner->bet;
         }
     }
 }
@@ -422,6 +405,10 @@ void GameManager::NewRoundTimer()
     const int newRoundBeginningTime = 5;
     int timer = newRoundBeginningTime;
 
+    winnerList.clear();
+    loserList.clear();
+    tiedPlayerList.clear();
+
     for (int i = 0; i < newRoundBeginningTime; ++i)
     {
         std::cout << "Time Remaining : " << timer << std::endl;
@@ -434,4 +421,20 @@ void GameManager::NewRoundTimer()
     std::cout << "********** Welcome To New BlackJack Round !! **********" << std::endl;
     std::cout << "    **************** Best Of Luck!! ****************" << std::endl;
     playerNumber++;
+}
+
+void GameManager::IncrementWallet(Player* mainPlayer)
+{
+    if(mainPlayer->point == blackjack)
+    {
+        mainPlayer->wallet += (mainPlayer->bet * 2);
+        return;
+    }
+
+    mainPlayer->wallet += mainPlayer->bet;
+}
+
+void GameManager::DecrementWallet(Player* mainPlayer)
+{
+    mainPlayer->wallet -= mainPlayer->bet;
 }

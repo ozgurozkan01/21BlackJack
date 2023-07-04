@@ -54,7 +54,9 @@ public:
 
     static int ConvertCardToPoint(std::string& card);
     void DesignatePlayersLastState();
-    void BetsPayOut();
+    void IncrementWallet(Player* mainPlayer);
+    void DecrementWallet(Player* mainPlayer);
+
     void PrintPlayersState();
     static void GameRoundEnd();
     void NewRoundTimer();
