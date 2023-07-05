@@ -132,6 +132,8 @@ void GameManager::FillUpWallet()
 
         }while(!isAcceptableMoney);
     }
+
+    std::cout << std::endl;
 }
 
 
@@ -418,6 +420,7 @@ void GameManager::NewRoundTimer()
 
     system("cls");
 
+    std::cout << std::endl;
     std::cout << "********** Welcome To New BlackJack Round !! **********" << std::endl;
     std::cout << "    **************** Best Of Luck!! ****************" << std::endl;
     playerNumber++;
