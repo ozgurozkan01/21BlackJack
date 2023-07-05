@@ -75,7 +75,7 @@ void GameManager::SetPlayerName()
 {
 
     std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
-    for (int i = 0; i < playerNumber - 1; ++i)
+    for (int i = 0; i < mainPlayerNumber; ++i)
     {
         bool isPlayerNameCorrect;
 
@@ -116,7 +116,8 @@ void GameManager::FillUpWallet()
 {
     bool isAcceptableMoney;
     std::cout << "You should enter minimum bet amount (10 Dolar) to take a seat at the table in Blackjack!" << std::endl;
-    for(int i = 0; i < playerNumber-1; i++)
+
+    for(int i = 0; i < mainPlayerNumber; i++)
     {
         do
         {
@@ -141,7 +142,7 @@ void GameManager::PlaceBets()
 {
     bool isBetAcceptable;
 
-    for (int i = 0; i < playerNumber-1; ++i)
+    for (int i = 0; i < mainPlayerNumber; ++i)
     {
         do
         {
@@ -160,6 +161,7 @@ void GameManager::PlaceBets()
             if (mainPlayers[i]->bet > mainPlayers[i]->wallet)
             {
                 std::cout << "Sorry, you does not have enough money in your wallet!!" << std::endl;
+                std::cout << "Current Wallet : " << mainPlayers[i]->wallet << std::endl;
                 isBetAcceptable = false;
             }
 
