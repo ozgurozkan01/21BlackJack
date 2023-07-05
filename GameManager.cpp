@@ -37,18 +37,16 @@ void GameManager::Tick()
 {
     //PlaceBets();
     DealInitialCard();
-
-    if(cardDeck->ShouldDeckShuffle())
-    {
-        cardDeck->ShuffleCardDeck();
-    }
-
     DealHitCard();
     DesignatePlayersLastState();
     PrintPlayersState();
     GameRoundEnd();
     NewRoundTimer();
 
+    if(cardDeck->ShouldDeckShuffle())
+    {
+        cardDeck->ShuffleCardDeck();
+    }
 }
 
 void GameManager::SetPlayerNumber()
@@ -221,7 +219,7 @@ void GameManager::DealHitCard()
 
             std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
-            
+
             if (isCardDealing)
             {
                 std::string cardValue = GetDealCard();
