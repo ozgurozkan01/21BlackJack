@@ -4,13 +4,14 @@
 
 #include "CardDeck.h"
 #include "Card.h"
-#include <iostream>
+
 std::string validCardValues[] = {"A", "2", "3", "4", "5", "6",
                                  "7", "8", "9", "10", "J", "Q", "K"};
 
 CardDeck::CardDeck()
 {
     totalCardNumberInDeck = 52;
+    currentCardNumberInDeck = totalCardNumberInDeck;
     index = 0;
     oneTypeCardNumber = totalCardNumberInDeck / (sizeof(validCardValues) / sizeof(validCardValues[0]));
     
@@ -32,9 +33,19 @@ std::vector<Card*>& CardDeck::GetDeck()
 
 void CardDeck::DecreaseCardNumber()
 {
-    totalCardNumberInDeck--;
+    currentCardNumberInDeck--;
 }
 
 int CardDeck::GetRestOfCardNumber() {
-    return totalCardNumberInDeck;
+    return currentCardNumberInDeck;
+}
+
+bool CardDeck::ShouldDeckShuffle() {
+    return currentCardNumberInDeck <= minCardNumberToShuffle;
+}
+
+
+void CardDeck::ShuffleCardDeck()
+{
+    currentCardNumberInDeck = totalCardNumberInDeck;
 }

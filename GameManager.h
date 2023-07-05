@@ -11,7 +11,7 @@
 #define mainPlayerNumber 7
 #define blackjack 21
 
-
+class Card;
 class CardDeck;
 class BasePlayer;
 class Player;
@@ -27,11 +27,12 @@ class GameManager {
     std::vector<Player*> winnerList;
     std::vector<Player*> loserList;
     std::vector<Player*> tiedPlayerList;
-
+    std::vector<Card*> cardAmountToPlay;
 
     int playerNumber;
     const int minBet = 10;
     const int maxBet = 10000;
+    const int deckAmountToPlay = 5;
 
 public:
 

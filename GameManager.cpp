@@ -14,6 +14,14 @@ GameManager::GameManager()
     cardDeck = new CardDeck();
     playerNumber = 0.f;
 
+    for (int i = 0; i < deckAmountToPlay; ++i)
+    {
+        for (auto card : cardDeck->GetDeck())
+        {
+            cardAmountToPlay.push_back(card);
+        }
+    }
+
     std::cout << "********** WELCOME TO 21 BLACKJAKE GAME **********" << std::endl;
     std::cout << "***************** BEST OF LUCK! ******************" << std::endl;
 }
@@ -22,19 +30,25 @@ void GameManager::BeginPlay()
 {
     SetPlayerNumber();
     SetPlayerName();
-    FillUpWallet();
+    //FillUpWallet();
 }
 
 void GameManager::Tick()
 {
-    PlaceBets();
+    //PlaceBets();
     DealInitialCard();
+
+    if(cardDeck->ShouldDeckShuffle())
+    {
+        cardDeck->ShuffleCardDeck();
+    }
+
     DealHitCard();
     DesignatePlayersLastState();
-    //BetsPayOut();
     PrintPlayersState();
     GameRoundEnd();
     NewRoundTimer();
+
 }
 
 void GameManager::SetPlayerNumber()
@@ -178,10 +192,8 @@ std::string GameManager::GetDealCard()
     cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
     cardDeck->GetDeck().push_back(cardHolder);
     cardDeck->DecreaseCardNumber();
-
     return cardValue;
 }
-
 
 void GameManager::DealInitialCard()
 {
@@ -440,6 +452,6 @@ void GameManager::IncrementWallet(Player* mainPlayer)
 }
 
 void GameManager::DecrementWallet(Player* mainPlayer)
-{ 
+{
     mainPlayer->wallet -= mainPlayer->bet;
 }

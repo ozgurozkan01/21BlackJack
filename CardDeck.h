@@ -11,8 +11,10 @@ class Card;
 
 class CardDeck {
 
+    const int minCardNumberToShuffle = 50;
     int oneTypeCardNumber;
     int totalCardNumberInDeck;
+    int currentCardNumberInDeck;
     int index;
     std::vector<Card*> deck;
 
@@ -21,6 +23,8 @@ public:
     std::vector<Card*>& GetDeck(); 
     int GetRestOfCardNumber();
     void DecreaseCardNumber();
+    void ShuffleCardDeck();
+    bool ShouldDeckShuffle();
 };
 
 
