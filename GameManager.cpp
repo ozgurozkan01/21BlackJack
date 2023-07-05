@@ -221,14 +221,7 @@ void GameManager::DealHitCard()
 
             std::cout << players[i]->nickName << ", do you wanna hit card (1-> yes, 0-> no) : " << std::flush;
             std::cin >> isCardDealing;
-
-/*            if (players[i]->nickName == croupier->nickName && players[i]->point < 17 && !isCardDealing)
-            {
-                std::cout << "You are CROUPIER and your point is less than 17" << std::endl;
-                std::cout << "You have to want to card to get through 17 point !!" << std::endl;
-                isCardDealing = true;
-            }*/
-
+            
             if (isCardDealing)
             {
                 std::string cardValue = GetDealCard();

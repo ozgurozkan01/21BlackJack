@@ -64,5 +64,4 @@ public:
     std::string GetDealCard();
 };
 
-
 #endif //INC_21BLACKJACK_GAMEMANAGER_H
