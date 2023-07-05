@@ -440,6 +440,6 @@ void GameManager::IncrementWallet(Player* mainPlayer)
 }
 
 void GameManager::DecrementWallet(Player* mainPlayer)
-{
+{ 
     mainPlayer->wallet -= mainPlayer->bet;
 }
