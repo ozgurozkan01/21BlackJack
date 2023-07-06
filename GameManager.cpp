@@ -30,12 +30,12 @@ void GameManager::BeginPlay()
 {
     SetPlayerNumber();
     SetPlayerName();
-    //FillUpWallet();
+    FillUpWallet();
 }
 
 void GameManager::Tick()
 {
-    //PlaceBets();
+    PlaceBets();
     DealInitialCard();
     DealHitCard();
     DesignatePlayersLastState();
