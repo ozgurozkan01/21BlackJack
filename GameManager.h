@@ -44,7 +44,7 @@ public:
     void SetPlayerName();
     void FillUpWallet();
     void PlaceBets();
-
+           
     // Initial Part
     void DealInitialCard();
     bool DoesHandHaveACE(int index);
