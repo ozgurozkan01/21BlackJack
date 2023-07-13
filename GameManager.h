@@ -14,7 +14,7 @@
 class Card;
 class CardDeck;
 class BasePlayer;
-class Player;
+class Player; 
 class Croupier;
 
 class GameManager {

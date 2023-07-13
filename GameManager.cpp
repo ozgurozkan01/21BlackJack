@@ -46,7 +46,7 @@ void GameManager::Tick()
     if(cardDeck->ShouldDeckShuffle())
     {
         cardDeck->ShuffleCardDeck();
-    }      
+    }
 }
 
 void GameManager::SetPlayerNumber()
