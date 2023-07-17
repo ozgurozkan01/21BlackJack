@@ -19,12 +19,14 @@ class CardDeck {
     std::vector<Card*> deck;
 
 public:
+
     CardDeck();
-    std::vector<Card*>& GetDeck(); 
-    int GetRestOfCardNumber();
-    void DecreaseCardNumber();
-    void ShuffleCardDeck();
-    bool ShouldDeckShuffle();
+
+    std::vector<Card*>& getDeck();
+    int getRestOfCardNumber();
+    void decreaseCardNumber();
+    void shuffleCardDeck();
+    bool shouldDeckShuffle();
 };
 
 

@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/ozgur/OneDrive/Documents/GitHub/21BlackJack/cmake-build-debug",
-		"source" : "C:/Users/ozgur/OneDrive/Documents/GitHub/21BlackJack"
+		"build" : "C:/Users/ozgur/GitHub/21BlackJack/cmake-build-debug",
+		"source" : "C:/Users/ozgur/GitHub/21BlackJack"
 	},
 	"version" : 
 	{

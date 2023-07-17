@@ -12,7 +12,7 @@ class Card {
 public:
 
     Card(std::string cardValue);
-    std::string GetCardValue();
+    std::string getCardValue();
 };
 
 

@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2023.1.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\21BlackJack.dir/objects.a
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ar.exe qc CMakeFiles\21BlackJack.dir/objects.a @CMakeFiles\21BlackJack.dir\objects1
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\21BlackJack.dir/objects.a -Wl,--no-whole-archive -o 21BlackJack.exe -Wl,--out-implib,lib21BlackJack.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\21BlackJack.dir\linkLibs.rsp

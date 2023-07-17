@@ -3,11 +3,11 @@ int main() {
 
     GameManager* gameManager = new GameManager();
 
-    gameManager->BeginPlay();
+    gameManager->start();
 
     while(true)
     {
-        gameManager->Tick();
+        gameManager->update();
     }
 
     return 0;

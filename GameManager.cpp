@@ -16,7 +16,7 @@ GameManager::GameManager()
 
     for (int i = 0; i < deckAmountToPlay; ++i)
     {
-        for (auto card : cardDeck->GetDeck())
+        for (auto card : cardDeck->getDeck())
         {
             cardAmountToPlay.push_back(card);
         }
@@ -26,30 +26,30 @@ GameManager::GameManager()
     std::cout << "***************** BEST OF LUCK! ******************" << std::endl;
 }
 
-void GameManager::BeginPlay()
+void GameManager::start()
 {
-    SetPlayerNumber();
-    SetPlayerName();
-    FillUpWallet();
+    setPlayerNumber();
+    setPlayerName();
+    fillUpWallet();
 }
 
-void GameManager::Tick()
+void GameManager::update()
 {
-    PlaceBets();
-    DealInitialCard();
-    DealHitCard();
-    DesignatePlayersLastState();
-    PrintPlayersState();
-    GameRoundEnd();
-    NewRoundTimer();
+    placeBets();
+    dealInitialCard();
+    dealHitCard();
+    designatePlayersLastState();
+    printPlayersState();
+    gameRoundEnd();
+    newRoundTimer();
 
-    if(cardDeck->ShouldDeckShuffle())
+    if(cardDeck->shouldDeckShuffle())
     {
-        cardDeck->ShuffleCardDeck();
+        cardDeck->shuffleCardDeck();
     }
 }
 
-void GameManager::SetPlayerNumber()
+void GameManager::setPlayerNumber()
 {
     bool isPlayerNumberCorrect;
     std::string playerAmount;
@@ -83,7 +83,7 @@ void GameManager::SetPlayerNumber()
     std::cout << std::endl;
 }
 
-void GameManager::SetPlayerName()
+void GameManager::setPlayerName()
 {
 
     std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
@@ -124,7 +124,7 @@ void GameManager::SetPlayerName()
 }
 
 
-void GameManager::FillUpWallet()
+void GameManager::fillUpWallet()
 {
     bool isAcceptableMoney;
     std::cout << "You should enter minimum bet amount (10 Dolar) to take a seat at the table in Blackjack!" << std::endl;
@@ -150,7 +150,7 @@ void GameManager::FillUpWallet()
 }
 
 
-void GameManager::PlaceBets()
+void GameManager::placeBets()
 {
     bool isBetAcceptable;
 
@@ -182,34 +182,34 @@ void GameManager::PlaceBets()
 }
 
 
-std::string GameManager::GetDealCard()
+std::string GameManager::getDealCard()
 {
-    int cardIndex = rand() % cardDeck->GetRestOfCardNumber();
-    Card* cardHolder = cardDeck->GetDeck()[cardIndex];
-    std::string cardValue = cardHolder->GetCardValue();
-    cardDeck->GetDeck().erase(cardDeck->GetDeck().begin() + cardIndex);
-    cardDeck->GetDeck().push_back(cardHolder);
-    cardDeck->DecreaseCardNumber();
+    int cardIndex = rand() % cardDeck->getRestOfCardNumber();
+    Card* cardHolder = cardDeck->getDeck()[cardIndex];
+    std::string cardValue = cardHolder->getCardValue();
+    cardDeck->getDeck().erase(cardDeck->getDeck().begin() + cardIndex);
+    cardDeck->getDeck().push_back(cardHolder);
+    cardDeck->decreaseCardNumber();
     return cardValue;
 }
 
-void GameManager::DealInitialCard()
+void GameManager::dealInitialCard()
 {
     for (int i = 0; i < 2; ++i)
     {
         for (int j = 0; j < playerNumber; ++j)
         {
-            std::string cardValue = GetDealCard();
+            std::string cardValue = getDealCard();
             players[j]->initialCardValues[i] = cardValue;
         }
     }
 }
 
-void GameManager::DealHitCard()
+void GameManager::dealHitCard()
 {
     for (int i = 0; i < playerNumber; ++i)
     {
-        CalculatePlayerInitialHand(i);
+        calculatePlayerInitialHand(i);
         bool isCardDealing = false;
 
         std::cout << std::endl;
@@ -222,8 +222,8 @@ void GameManager::DealHitCard()
 
             if (isCardDealing)
             {
-                std::string cardValue = GetDealCard();
-                players[i]->point += ConvertCardToPoint(cardValue);
+                std::string cardValue = getDealCard();
+                players[i]->point += convertCardToPoint(cardValue);
                 std::cout << "Your new point is : " << players[i]->point << std::endl;
 
                 if (players[i]->point == blackjack)
@@ -250,14 +250,14 @@ void GameManager::DealHitCard()
     }
 }
 
-bool GameManager::DoesHandHaveACE(int index)
+bool GameManager::doesHandHaveACE(int index)
 {
     if (players[index]->initialCardValues[0] == "A" || players[index]->initialCardValues[1] == "A") { return true;}
 
     return false;
 }
 
-void GameManager::CalculatePlayerInitialHand(int index)
+void GameManager::calculatePlayerInitialHand(int index)
 {
     int point = 0;
     int value1 = 0;
@@ -265,7 +265,7 @@ void GameManager::CalculatePlayerInitialHand(int index)
 
     bool isPointChoiceCorrect = false;
 
-    if(DoesHandHaveACE(index))
+    if(doesHandHaveACE(index))
     {
         if (players[index]->initialCardValues[0] == "A" && players[index]->initialCardValues[1] == "A")
         {
@@ -276,15 +276,15 @@ void GameManager::CalculatePlayerInitialHand(int index)
 
         else if (players[index]->initialCardValues[0] != "A" && players[index]->initialCardValues[1] == "A")
         {
-            value1 = 11 + ConvertCardToPoint(players[index]->initialCardValues[0]);
-            value2 = 1 + ConvertCardToPoint(players[index]->initialCardValues[0]);
+            value1 = 11 + convertCardToPoint(players[index]->initialCardValues[0]);
+            value2 = 1 + convertCardToPoint(players[index]->initialCardValues[0]);
             std::cout << players[index]->nickName << " have 1 AS. You can choose " << value1 << " or " << value2 << std::endl;
         }
 
         else if (players[index]->initialCardValues[0] == "A" && players[index]->initialCardValues[1] != "A")
         {
-            value1 = 11 + ConvertCardToPoint(players[index]->initialCardValues[1]);
-            value2 = 1 + ConvertCardToPoint(players[index]->initialCardValues[1]);
+            value1 = 11 + convertCardToPoint(players[index]->initialCardValues[1]);
+            value2 = 1 + convertCardToPoint(players[index]->initialCardValues[1]);
             std::cout << players[index]->nickName << " have 1 AS. You can choose " << value1 << " or "
                       << value2 << std::endl;
         }
@@ -308,13 +308,14 @@ void GameManager::CalculatePlayerInitialHand(int index)
 
     else
     {
-        point = (ConvertCardToPoint(players[index]->initialCardValues[0]) + ConvertCardToPoint(players[index]->initialCardValues[1]));
+        point = (convertCardToPoint(players[index]->initialCardValues[0]) +
+                 convertCardToPoint(players[index]->initialCardValues[1]));
     }
 
     players[index]->point = point;
 }
 
-int GameManager::ConvertCardToPoint(std::string& card)
+int GameManager::convertCardToPoint(std::string& card)
 {
     if (card == "A") return 1;
     else if (card == "2") return 2;
@@ -328,7 +329,7 @@ int GameManager::ConvertCardToPoint(std::string& card)
     return 10; // J, K, Q, 10
 }
 
-void GameManager::DesignatePlayersLastState()
+void GameManager::designatePlayersLastState()
 {
     if (croupier == nullptr) return;
 
@@ -343,14 +344,14 @@ void GameManager::DesignatePlayersLastState()
             if (mainPlayers[i]->point > blackjack)
             {
                 loserList.push_back(mainPlayers[i]);
-                DecrementWallet(mainPlayers[i]);
+                decrementWallet(mainPlayers[i]);
                 continue;
             }
 
             else
             {
                 winnerList.push_back(mainPlayers[i]);
-                IncrementWallet(mainPlayers[i]);
+                incrementWallet(mainPlayers[i]);
             }
         }
     }
@@ -362,13 +363,13 @@ void GameManager::DesignatePlayersLastState()
             if (mainPlayers[i]->point > blackjack || mainPlayers[i]->point < croupierValue)
             {
                 loserList.push_back(mainPlayers[i]);
-                DecrementWallet(mainPlayers[i]);
+                decrementWallet(mainPlayers[i]);
             }
 
             else if (mainPlayers[i]->point > croupierValue)
             {
                 winnerList.push_back(mainPlayers[i]);
-                IncrementWallet(mainPlayers[i]);
+                incrementWallet(mainPlayers[i]);
             }
 
             else if (mainPlayers[i]->point == croupierValue)
@@ -379,7 +380,7 @@ void GameManager::DesignatePlayersLastState()
     }
 }
 
-void GameManager::PrintPlayersState()
+void GameManager::printPlayersState()
 {
     std::cout << "***** WINNER *****" << std::endl;
     for (auto winner : winnerList)
@@ -402,12 +403,12 @@ void GameManager::PrintPlayersState()
     std::cout << std::endl << std::endl;
 }
 
-void GameManager::GameRoundEnd()
+void GameManager::gameRoundEnd()
 {
     std::cout << "This round ended! New round will start after 5 seconds!" << std::endl;
 }
 
-void GameManager::NewRoundTimer()
+void GameManager::newRoundTimer()
 {
     const int newRoundBeginningTime = 5;
     int timer = newRoundBeginningTime;
@@ -431,7 +432,7 @@ void GameManager::NewRoundTimer()
     playerNumber++;
 }
 
-void GameManager::IncrementWallet(Player* mainPlayer)
+void GameManager::incrementWallet(Player* mainPlayer)
 {
     if(mainPlayer->point == blackjack)
     {
@@ -442,7 +443,7 @@ void GameManager::IncrementWallet(Player* mainPlayer)
     mainPlayer->wallet += mainPlayer->bet;
 }
 
-void GameManager::DecrementWallet(Player* mainPlayer)
+void GameManager::decrementWallet(Player* mainPlayer)
 {
     mainPlayer->wallet -= mainPlayer->bet;
 }

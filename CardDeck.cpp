@@ -20,32 +20,32 @@ CardDeck::CardDeck()
         for (int j = 0; j < oneTypeCardNumber; ++j)
         {
             deck.push_back(new Card(validCardValues[i]));
-            std::string cardValue = (*(deck.begin() + index))->GetCardValue();
+            std::string cardValue = (*(deck.begin() + index))->getCardValue();
             index++;
         }
     }
 }
 
-std::vector<Card*>& CardDeck::GetDeck()
+std::vector<Card*>& CardDeck::getDeck()
 {
     return deck;
 }
 
-void CardDeck::DecreaseCardNumber()
+void CardDeck::decreaseCardNumber()
 {
     currentCardNumberInDeck--;
 }
 
-int CardDeck::GetRestOfCardNumber() {
+int CardDeck::getRestOfCardNumber() {
     return currentCardNumberInDeck;
 }
 
-bool CardDeck::ShouldDeckShuffle() {
+bool CardDeck::shouldDeckShuffle() {
     return currentCardNumberInDeck <= minCardNumberToShuffle;
 }
 
 
-void CardDeck::ShuffleCardDeck()
+void CardDeck::shuffleCardDeck()
 {
     currentCardNumberInDeck = totalCardNumberInDeck;
 }

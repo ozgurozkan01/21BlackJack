@@ -37,31 +37,31 @@ class GameManager {
 public:
 
     GameManager();
-    void BeginPlay();
-    void Tick();
+    void start();
+    void update();
 
-    void SetPlayerNumber();
-    void SetPlayerName();
-    void FillUpWallet();
-    void PlaceBets();
+    void setPlayerNumber();
+    void setPlayerName();
+    void fillUpWallet();
+    void placeBets();
 
     // Initial Part
-    void DealInitialCard();
-    bool DoesHandHaveACE(int index);
-    void CalculatePlayerInitialHand(int index);
+    void dealInitialCard();
+    bool doesHandHaveACE(int index);
+    void calculatePlayerInitialHand(int index);
 
     // Hit Part
-    void DealHitCard();
+    void dealHitCard();
 
-    static int ConvertCardToPoint(std::string& card);
-    void DesignatePlayersLastState();
-    void IncrementWallet(Player* mainPlayer);
-    void DecrementWallet(Player* mainPlayer);
+    static int convertCardToPoint(std::string& card);
+    void designatePlayersLastState();
+    void incrementWallet(Player* mainPlayer);
+    void decrementWallet(Player* mainPlayer);
 
-    void PrintPlayersState();
-    static void GameRoundEnd();
-    void NewRoundTimer();
-    std::string GetDealCard();
+    void printPlayersState();
+    static void gameRoundEnd();
+    void newRoundTimer();
+    std::string getDealCard();
 };
 
 #endif //INC_21BLACKJACK_GAMEMANAGER_H
