@@ -87,7 +87,7 @@ void GameManager::setPlayerName()
 {
 
     std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
-    for (int i = 0; i < mainPlayerNumber; ++i)
+    for (int i = 0; i < playerNumber-1; ++i)
     {
         bool isPlayerNameCorrect;
 
@@ -129,7 +129,7 @@ void GameManager::fillUpWallet()
     bool isAcceptableMoney;
     std::cout << "You should enter minimum bet amount (10 Dolar) to take a seat at the table in Blackjack!" << std::endl;
 
-    for(int i = 0; i < mainPlayerNumber; i++)
+    for(int i = 0; i < playerNumber-1; i++)
     {
         do
         {
@@ -154,7 +154,7 @@ void GameManager::placeBets()
 {
     bool isBetAcceptable;
 
-    for (int i = 0; i < mainPlayerNumber; ++i)
+    for (int i = 0; i < playerNumber-1; ++i)
     {
         do
         {
