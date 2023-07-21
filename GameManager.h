@@ -4,6 +4,7 @@
 
 #ifndef INC_21BLACKJACK_GAMEMANAGER_H
 #define INC_21BLACKJACK_GAMEMANAGER_H
+
 #include <vector>
 #include <string>
 
