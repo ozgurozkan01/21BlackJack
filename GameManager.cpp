@@ -1,4 +1,3 @@
-
 #include "GameManager.h"
 #include "CardDeck.h"
 #include "Card.h"
@@ -11,7 +10,6 @@
 GameManager::GameManager()
 {
     srand(time(nullptr));
-
     cardDeck = new CardDeck();
     playerNumber = 0.f;
 
@@ -44,10 +42,7 @@ void GameManager::update()
     gameRoundEnd();
     newRoundTimer();
 
-    if(cardDeck->shouldDeckShuffle())
-    {
-        cardDeck->shuffleCardDeck();
-    }
+    if(cardDeck->shouldDeckShuffle()) { cardDeck->shuffleCardDeck(); }
 }
 
 void GameManager::setPlayerNumber()
@@ -86,7 +81,6 @@ void GameManager::setPlayerNumber()
 
 void GameManager::setPlayerName()
 {
-
     std::cout << "PLEASE DO NOT USE DIGIT IN NAME !" << std::endl;
     for (int i = 0; i < playerNumber-1; ++i)
     {

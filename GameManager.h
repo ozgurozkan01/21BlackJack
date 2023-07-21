@@ -1,13 +1,8 @@
-//
-// Created by ozgur on 6/5/2023.
-//
-
 #ifndef INC_21BLACKJACK_GAMEMANAGER_H
 #define INC_21BLACKJACK_GAMEMANAGER_H
 
 #include <vector>
 #include <string>
-
 #define playerNumberWithCroupier  8 // including croupier
 #define mainPlayerNumber 7
 #define blackjack 21
@@ -38,29 +33,23 @@ class GameManager {
 public:
 
     GameManager();
+
     void start();
     void update();
-
+    static void gameRoundEnd();
+    static int convertCardToPoint(std::string& card);
     void setPlayerNumber();
     void setPlayerName();
     void fillUpWallet();
     void placeBets();
-
-    // Initial Part
     void dealInitialCard();
     bool doesHandHaveACE(int index);
     void calculatePlayerInitialHand(int index);
-
-    // Hit Part
     void dealHitCard();
-
-    static int convertCardToPoint(std::string& card);
     void designatePlayersLastState();
     void incrementWallet(Player* mainPlayer);
     void decrementWallet(Player* mainPlayer);
-
     void printPlayersState();
-    static void gameRoundEnd();
     void newRoundTimer();
     std::string getDealCard();
 };
