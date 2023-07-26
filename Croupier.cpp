@@ -7,3 +7,7 @@
 Croupier::Croupier()
 {
 }
+
+Croupier::~Croupier()
+{
+}

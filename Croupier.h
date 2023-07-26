@@ -13,6 +13,7 @@ class Croupier : public BasePlayer {
 public:
 
     Croupier();
+    ~Croupier();
 };
 
 

@@ -33,7 +33,7 @@ class GameManager {
 public:
 
     GameManager();
-
+    ~GameManager();
     void start();
     void update();
     static void gameRoundEnd();

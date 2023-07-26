@@ -21,6 +21,7 @@ class CardDeck {
 public:
 
     CardDeck();
+    ~CardDeck();
 
     std::vector<Card*>& getDeck();
     int getRestOfCardNumber();

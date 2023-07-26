@@ -442,3 +442,19 @@ void GameManager::decrementWallet(Player* mainPlayer)
 {
     mainPlayer->wallet -= mainPlayer->bet;
 }
+
+GameManager::~GameManager()
+{
+    delete cardDeck;
+    for (auto player : players)
+    {
+        delete player;
+    }
+
+    for (auto mainPlayer : mainPlayers)
+    {
+        delete mainPlayer;
+    }
+
+    delete croupier;
+}

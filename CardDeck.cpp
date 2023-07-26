@@ -49,3 +49,11 @@ void CardDeck::shuffleCardDeck()
 {
     currentCardNumberInDeck = totalCardNumberInDeck;
 }
+
+CardDeck::~CardDeck()
+{
+    for (auto card : deck)
+    {
+        delete card;
+    }
+}
